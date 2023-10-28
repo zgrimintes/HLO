@@ -1,3 +1,4 @@
+///REZOLVARE DE 80 DE PUNCTE
 #include <iostream>
 #include <fstream>
 #include <queue>
@@ -8,14 +9,14 @@ queue< pair< int, int > > Q;
 ifstream fin("tsunami.in");
 ofstream fout("tsunami.out");
 int arh[1005][1005];
-int di[4] = {-1, 0, 1, 0};
-int dj[4] = {0, 1, 0, -1};
+int di[4] = { -1, 0, 1, 0 };
+int dj[4] = { 0, 1, 0, -1 };
 int h;
 int cnt_afc = 0;
 
-void citire(int n, int m){
+void citire(int n, int m) {
     for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= m; j++){
+        for (int j = 1; j <= m; j++) {
             fin >> arh[i][j];
         }
 }
@@ -28,14 +29,17 @@ void bordare(int n, int m) {
         arh[0][i] = arh[n + 1][i] = 11;
 }
 
-void fil(int i, int j){
+void fil(int i, int j) {
     if (arh[i][j] >= h) return;
 
-    if (arh[i][j] != 0) { cnt_afc++; arh[i][j] = 100; }
+    if (arh[i][j] != 0) { 
+        cnt_afc++; 
+        arh[i][j] = 100; 
+    }
     else arh[i][j] = 11;
 
     for (int k = 0; k < 4; k++)
-        fil(i+di[k], j+dj[k]);
+        fil(i + di[k], j + dj[k]);
 
 }
 
@@ -46,9 +50,9 @@ int main()
     citire(n, m);
     bordare(n, m);
 
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            fil(i, j);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (arh[i][j] == 0) fil(i, j);
         }
     }
 
