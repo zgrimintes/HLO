@@ -1,0 +1,64 @@
+///Rezolvare de 60 de puncte 
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+ifstream fin("labirint.in");
+ofstream fout("labirint.out");
+
+int lab[1005][1005];
+int clab[1005][1005];
+int di[4] = { -1, 0, 1, 0};
+int dj[4] = { 0, 1, 0, -1};
+int rez_min = 100001;
+
+void copy_lab(int n) {
+	for (int i = 0; i <= n + 1; i++)
+		for (int j = 0; j <= n + 1; j++)
+			clab[i][j] = lab[i][j];
+}
+
+void citire(int n) {
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= n; j++) {
+			fin >> lab[i][j];
+			if (lab[i][j] < rez_min) rez_min = lab[i][j];
+		}
+}
+
+void bordare(int n) {
+	for (int i = 0; i <= n + 1; i++)
+		lab[0][i] = lab[n + 1][i] = lab[i][0] = lab[i][n + 1] = -1;
+}
+
+void fill(int i, int j) {
+	if (clab[i][j] > rez_min || clab[i][j] == -1) return;
+
+	clab[i][j] = -1;
+	
+	for (int k = 0; k < 4; k++) {
+		fill(i + di[k], j + dj[k]);
+	}
+}
+
+int main() {
+	int n; fin >> n;
+	citire(n);
+	bordare(n);
+	copy_lab(n);
+
+	while (clab[1][1] != -1) {
+		fill(n, n);
+		if (clab[1][1] != -1) {
+			rez_min++;
+			copy_lab(n);
+		}
+	}
+
+	fout << rez_min;
+
+	return 0;
+}
+
+///Rezolvare de 100 de puncte
