@@ -1,4 +1,5 @@
 //REZOLVARE DE 20 DE PUNCTE
+//Comentariu de test
 #include <iostream>
 
 using namespace std;
