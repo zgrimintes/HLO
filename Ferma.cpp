@@ -11,7 +11,6 @@ char ferm[405][405];
 char cferm[405][405];
 int ferm2[405][405];
 int sup_all[160002], ind_s = 1;
-int chars[27];
 int di[4] = { -1, 0, 1, 0 };
 int dj[4] = { 0, 1, 0, -1 };
 int cnt_sup = 0, sup_max = 0;
@@ -50,6 +49,8 @@ void fill(int i, int j, char c) {
 void checkVec(int i, int j, int d) {
 	char vec[4] = { 0 };
 	int vecc[4] = { 0 };
+	int temp_max = 0;
+
 	for (int k = 0; k < 4; k++) {
 		int ni = i + di[k],
 			nj = j + dj[k];
@@ -59,35 +60,33 @@ void checkVec(int i, int j, int d) {
 		}
 	}
 
-	if (vec[0] != 0 && vec[0] == vec[1]) {
-		if (vecc[0] != vecc[1]) cnt_sup2 = 1 + sup_all[ferm2[i - 1][j]] + sup_all[ferm2[i][j + 1]];
-		else cnt_sup2 = 1 + sup_all[ferm2[i - 1][j]];
-		c_cel = cferm[i - 1][j];
-	}
-	else if (vec[0] != 0 && vec[0] == vec[2]) {
-		if (vecc[0] != vecc[2]) cnt_sup2 = 1 + sup_all[ferm2[i - 1][j]] + sup_all[ferm2[i + 1][j]];
-		else cnt_sup2 = 1 + sup_all[ferm2[i - 1][j]];
-		c_cel = cferm[i - 1][j];
-	}
-	else if (vec[0] != 0 && vec[0] == vec[3]) {
-		if (vecc[0] != vecc[3]) cnt_sup2 = 1 + sup_all[ferm2[i - 1][j]] + sup_all[ferm2[i][j - 1]];
-		else cnt_sup2 = 1 + sup_all[ferm2[i - 1][j]];
-		c_cel = cferm[i - 1][j];
-	}
-	else if (vec[1] != 0 && vec[2] == vec[2]) {
-		if (vecc[1] != vecc[1]) cnt_sup2 = 1 + sup_all[ferm2[i][j + 1]] + sup_all[ferm2[i + 1][j]];
-		else cnt_sup2 = 1 + sup_all[ferm2[i][j + 1]];
-		c_cel = cferm[i][j + 1];
-	}
-	else if (vec[1] != 0 && vec[3] == vec[3]) {
-		if (vecc[1] != vecc[1]) cnt_sup2 = 1 + sup_all[ferm2[i][j + 1]] + sup_all[ferm2[i][j - 1]];
-		else cnt_sup2 = 1 + sup_all[ferm2[i][j + 1]];
-		c_cel = cferm[i][j + 1];
-	}
-	else if (vec[2] != 0 && vec[2] == vec[3]) {
-		if (vecc[2] != vecc[2]) cnt_sup2 = 1 + sup_all[ferm2[i + 1][j]] + sup_all[ferm2[i][j - 1]];
-		else cnt_sup2 = 1 + sup_all[ferm2[i + 1][j]];
-		c_cel = cferm[i + 1][j];
+	int cnt_temp = 0;
+	for (int k = 0; k < 4; k++) if (vec[k] == 0)  cnt_temp++;
+
+	if (cnt_temp < 3) {
+		for (int k = 0; k < 3; k++) {
+				int nik = i + di[k],
+					njk = j + dj[k];
+				cnt_sup2 = sup_all[ferm2[nik][njk]];
+
+				for (int l = 1; l < 4 - k; l++) {
+					if (k != l) {
+						if (vec[k] != 0 && vec[k] == vec[l]) {
+							int nil = i + di[l],
+								njl = j + dj[l];
+
+							if (vecc[k] != vecc[l]) cnt_sup2 += sup_all[ferm2[nil][njl]];
+
+							c_cel = cferm[nik][njk];
+						}
+					}
+				}
+
+				if (cnt_sup2 > temp_max) temp_max = cnt_sup2;
+			}
+
+		cnt_sup2 = max(temp_max, cnt_sup2);
+		cnt_sup2++;
 	}
 }
 
@@ -109,8 +108,9 @@ int main() {
 	}
 
 	ind_s = 1;
-	for (int i = 1; i <= n; i++)
-		for (int j = 1; j <= m; j++) {
+	for (int i = 10; i <= n; i++)
+		for (int j = 24; j <= m; j++) {
+			cnt_sup2 = 0;
 			checkVec(i, j, ferm2[i][j]);
 			if (cnt_sup2 > sup_max2) {
 				sup_max2 = cnt_sup2;
