@@ -1,5 +1,6 @@
 //Problema de pe infoarena
 //TREBUIE ADAUGAT MOD 666013!!!!!
+//Ex prop: Iepuri, Bisectoare
 
 #include <iostream>
 #include <fstream>
