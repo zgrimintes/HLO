@@ -1,4 +1,5 @@
 //Problema de pe infoarena
+//TREBUIE ADAUGAT MOD 666013!!!!!
 
 #include <iostream>
 #include <fstream>
