@@ -1,4 +1,4 @@
-//Cerinta 3 INCORECT
+//REZOLVARE DE 100 DE PUNCTE
 #include <iostream>
 #include <fstream>
 
@@ -15,7 +15,9 @@ void citire(int a[], int n) {
 int get_largest_power(int n) {
     int lg = 1;
 
-    for (lg; lg < n; lg <<= 1);
+    for (; lg < n; lg <<= 1);
+
+    return lg;
 }
 
 int cerinta1(int a[], int x, int n) {
@@ -29,7 +31,7 @@ int cerinta1(int a[], int x, int n) {
 
     if (a[poz] == x)
         return poz;
-    return - 2;
+    return -2;
 
 }
 
@@ -46,11 +48,11 @@ int cerinta2(int a[], int x, int n) {
 }
 
 int cerinta3(int a[], int x, int n) {
-    int lg = 1;
+    int lg = get_largest_power(n);
     int poz = n - 1;
 
-    for (lg; lg < n; lg <<= 1) {
-        if (poz - lg > 0 && a[poz - lg] >= x)
+    for (lg; lg != 0; lg >>= 1) {
+        if (poz - lg >= 0 && a[poz - lg] >= x)
             poz -= lg;
     }
 
