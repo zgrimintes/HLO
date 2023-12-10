@@ -12,7 +12,7 @@ int cautaSemn(int st, int dr){
         if (exp[dr] == ')') cnt_p++;
         if (exp[dr] == '(') cnt_p--;
 
-        if (cnt_p = 0 && (exp[dr] == '+' || exp[dr] == '-' )) return dr;
+        if (cnt_p == 0 && (exp[dr] == '+' || exp[dr] == '-' )) return dr;
     }
     return -1;
 }
