@@ -35,7 +35,7 @@ long long gcd(int a, int b) {
     return a;
 }
 
-long long hcf(int a, int b) {
+long long lcm(int a, int b) {
     return (a * b) / gcd(a, b);
 }
 
@@ -63,7 +63,7 @@ long long eval(int st, int dr, int a) {
             long long E1 = eval(st + 1, p - 1, a);
             long long E2 = eval(p + 1, dr - 1, a);
 
-            return hcf(E1, E2);
+            return lcm(E1, E2);
         }
     }
 
