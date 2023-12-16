@@ -29,7 +29,7 @@ struct Hash
 	}
 
 	void roll(char toRemove, char toAdd) {
-		hashh = ((hashh - (toRemove * power) % m + m) * n + toAdd) % m;
+		hashh = (((hashh - (toRemove * power) % m + m) * n) % m + toAdd) % m;
 	}
 };
 
@@ -54,7 +54,7 @@ int main()
 	b1Hash.init(B, nA);
 	b2Hash.init(B, nA);
 
-	if (a1Hash.hashh == b1Hash.hashh && a2Hash.hashh == b2Hash.hashh) matches[cnt_match++] = 1;
+	if (a1Hash.hashh == b1Hash.hashh && a2Hash.hashh == b2Hash.hashh) matches[cnt_match++] = 0;
 
 	for (int i = nA; i < nB; i++) {
 		b1Hash.roll(B[i - nA], B[i]);
