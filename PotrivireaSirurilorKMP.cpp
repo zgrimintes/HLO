@@ -1,4 +1,4 @@
-//NU MERGE - 14 PUNCTE
+//REZOLVARE DE 100 DE PUNCTE
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -30,10 +30,10 @@ void formare_prefix() {
 }
 
 void KMP() {
-    int i = 0, j = -1;
+    int i = 0, j = 0;
 
     while (i < nB) {
-        if (j >= 0 && B[i] != A[j])
+        while (j >= 0 && B[i] != A[j])
             j = pref[j];
 
         i++;
