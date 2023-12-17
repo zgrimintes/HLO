@@ -1,4 +1,4 @@
-///DE TERMINAT POZITIA DE PE CARE INCEP ASEMANARILE
+//NU MERGE - 14 PUNCTE
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -20,7 +20,7 @@ void formare_prefix() {
     pref[0] = -1;
 
     while (i < nA) {
-        if (j >= 0 && A[i] == A[j])
+        while (j >= 0 && A[i] != A[j])
             j = pref[j];
 
         j++;
@@ -33,12 +33,15 @@ void KMP() {
     int i = 0, j = -1;
 
     while (i < nB) {
-        if (j >= 0 && B[i] != B[j])
+        if (j >= 0 && B[i] != A[j])
             j = pref[j];
 
         i++;
         j++;
-        if (j == nA) matches[cnt_match++] = i - j + 1;
+        if (j == nA) {
+            j = pref[j];
+            matches[cnt_match++] = i - nA;
+        }
     }
 }
 
