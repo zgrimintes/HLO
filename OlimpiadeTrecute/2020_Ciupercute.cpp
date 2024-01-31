@@ -1,4 +1,3 @@
-//DE TERMINAT
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -11,7 +10,7 @@ ofstream fout("ciupercute.out");
 int grad[105][105], viz[105][105], timp = 99999, inapoi;
 int n, m, k;
 
-const int dI[4] = {1, 0, -1, 0},
+const int dI[4] = {-1, 0, 1, 0},
           dJ[4] = {0, 1, 0, -1};
 
 void bordare(){
@@ -64,7 +63,7 @@ void backtrack(int i, int j, int t, int c) {
     viz[i][j] = 1;
 
     int ciup = 0;
-    if (viz[i][j] != 0)
+    if (grad[i][j] != 0)
         ciup = 1;
 
     for (int k = 0; k < 4; k++) {
