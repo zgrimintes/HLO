@@ -1,4 +1,3 @@
-///DE TERMINAT AFISAREA SOLUTIEI
 #include <iostream>
 #include <fstream>
 
@@ -13,16 +12,16 @@ int dp[1025][1025];
 int rasp[1025];
 int ind_rasp;
 
-void citire(){
+void citire() {
     for (int i = 1; i <= m; i++)
         fin >> A[i];
     for (int i = 1; i <= n; i++)
         fin >> B[i];
 }
 
-int solve(){
+int solve() {
 
-    for (int i = 1; i <= m; i ++)
+    for (int i = 1; i <= m; i++)
         for (int j = 1; j <= n; j++)
             if (A[i] == B[j]) dp[i][j] = dp[i - 1][j - 1] + 1;
             else dp[i][j] = max(dp[i - 1][j - 1], max(dp[i - 1][j], dp[i][j - 1]));
@@ -30,17 +29,25 @@ int solve(){
     return dp[m][n];
 }
 
-void formRasp(){
-    ind_rasp = dp[i][j];
+void formRasp() {
+    ind_rasp = dp[m][n];
 
-    for (int i = m; i > 0; i--)
-        for (int j = n; j > 0; j--)
-            if (A[i] == B[j])
+    int i = m, j = n;
+    while (i != 0 && j != 0) {
+        if (A[i] == B[j]) {
+            rasp[ind_rasp--] = A[i];
+            i--, j--;
+        }
+        else {
+            if (dp[i - 1][j] >= dp[i][j - 1]) i--;
+            else j--;
+        }
+    }
 
 }
 
-void afisare(){
-    for (int i = 0; i < dp[m][n]; i++)
+void afisare() {
+    for (int i = 1; i <= dp[m][n]; i++)
         fout << rasp[i] << " ";
 }
 
@@ -50,6 +57,7 @@ int main()
     citire();
 
     fout << solve() << "\n";
+    formRasp();
     afisare();
 
     return 0;
