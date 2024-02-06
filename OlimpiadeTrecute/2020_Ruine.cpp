@@ -1,4 +1,4 @@
-///DE TERMINAT C2
+///REZOLVARE COMPLETA
 #include <iostream>
 #include <fstream>
 #include <queue>
@@ -52,11 +52,14 @@ bool inMat(int i, int j) {
 }
 
 void fillRoom(int i, int j) {
-    if (inMat(i, j)) {
+    if (!inMat(i, j)) {
         continueFill = false;
         cnt_rooms--;
         return;
     }
+
+    if (i == 3 && j == 2)
+        cout << " ";
 
     if (cam[i][j] < 0) return;
 
@@ -79,10 +82,8 @@ void fillRoom(int i, int j) {
 
 int camere(int i, int j) {
     for (int i = 1; i <= n; i++) {
-        if (i == 3)
-            cout << "";
         for (int j = 1; j <= m; j++)
-            if (isCorner(harta[i][j])) {
+            if (isCorner(harta[i][j]) && cam[i][j] != -1) {
                 continueFill = true;
                 fillRoom(i, j);
                 cnt_rooms++;
@@ -110,7 +111,7 @@ bool checkPortals(int i, int j, int step) {
 }
 
 void Lee(int i, int j, int x, int y) {
-    
+
     Q.push({ i, j });
     int ic = 0, jc = 0;
     cam[1][1] = 1;
@@ -120,9 +121,6 @@ void Lee(int i, int j, int x, int y) {
         ic = Q.front().first;
         jc = Q.front().second;
 
-        if (ic == 6) 
-            cout << "";
-
         Q.pop();
 
         int nr = harta[ic][jc];
@@ -131,7 +129,7 @@ void Lee(int i, int j, int x, int y) {
 
             if (!checkPortals(ic - 1, jc, cam[ic][jc]))
                 Q.push({ ic - 1, jc });
-            
+
             cam[ic - 1][jc] = cam[ic][jc] + 1;
         }
         if (((nr >> 1) & 1) == 0 && cam[ic][jc + 1] == 0 && inMat(ic, jc + 1)) {
@@ -142,17 +140,16 @@ void Lee(int i, int j, int x, int y) {
             cam[ic][jc + 1] = cam[ic][jc] + 1;
         }
         if (((nr >> 2) & 1) == 0 && cam[ic + 1][jc] == 0 && inMat(ic + 1, jc)) {
-            
+
             if (!checkPortals(ic + 1, jc, cam[ic][jc]))
                 Q.push({ ic + 1, jc });
-            
+
             cam[ic + 1][jc] = cam[ic][jc] + 1;
         }
         if (((nr >> 3) & 1) == 0 && cam[ic][jc - 1] == 0 && inMat(ic, jc - 1)) {
-            
-            if (!checkPortals(ic, jc + 1, cam[ic][jc]))
-                Q.push({ ic, jc + 1 });
-            
+            if (!checkPortals(ic, jc - 1, cam[ic][jc]))
+                Q.push({ ic, jc - 1 });
+
             cam[ic][jc - 1] = cam[ic][jc] + 1;
         }
     }
@@ -181,6 +178,7 @@ int main()
     citire();
     bordare();
     portale();
+
     if (c == 1)
         fout << camere(1, 1);
     else {
