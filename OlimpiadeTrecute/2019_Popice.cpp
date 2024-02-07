@@ -1,4 +1,3 @@
-///DE TERMINAT
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -23,15 +22,15 @@ long long getNb(int i){
 
 void citire_res() {
     while (q) {
-        fin.getline(res, 10);
-        for (int i = 0; i < 10; i++){
+        fin >> res;
+        for (int i = 0; res[i]; i++){
             if (res[i] == '=') {
                 n -= getNb(i+1);
                 k--;
                 break;
             }
             if (res[i] == '+'){
-                n -= getNb(res[i+1]);
+                n -= getNb(i+1);
                 break;
             }
         }
@@ -53,7 +52,7 @@ long long modPow(long long b, long long e) {
     while (e) {
         if (e % 2 == 1)
             rez = (rez * b) % MOD;
-        b = b * b & MOD;
+        b = b * b % MOD;
         e /= 2;
     }
 
