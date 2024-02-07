@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
+#include <queue>
 #include <cstring>
 
 using namespace std;
@@ -11,10 +12,12 @@ ofstream fout("castel.out");
 
 stack <char> smn;
 stack <int> nbs;
+queue < pair <int, int> > Q;
 
 int mat[105][105];
 char ec[2000];
 int n, exps, ind;
+int cnt_cam = 0;
 
 int getY(int nr) {
     return (nr % n == 0) ? n : nr % n;
@@ -108,10 +111,22 @@ void citire() {
 
 }
 
+void Lee(int i, int j) {
+    Q.push({ 1, 1 });
+
+    while (!Q.empty()) {
+        int ic = Q.front().first,
+            jc = Q.front().second;
+
+        Q.pop();
+    }
+}
+
 int main()
 {
     fin >> n >> exps;
     fin.get();
     citire();
+    Lee(1, 1);
     return 0;
 }
