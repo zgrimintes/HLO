@@ -1,4 +1,4 @@
-//De terminat
+//De terminat, nu da la toate testele
 #include <iostream>
 #include <fstream>
 #include <stack>
@@ -15,9 +15,14 @@ stack <int> nbs;
 queue < pair <int, int> > Q;
 
 int mat[105][105];
+int tmp[105][105];
 char ec[2000];
 int n, exps, ind;
 int cnt_cam = 0;
+int lastI, lastJ;
+
+int dI[4] = {-1, 0, 1, 0},
+    dJ[4] = {0, 1, 0, -1};
 
 int getY(int nr) {
     return (nr % n == 0) ? n : nr % n;
@@ -106,19 +111,41 @@ void citire() {
         int cam = getNb();
         ind++;
         solve();
-        mat[(cam - 1) / 5][getY(cam)] = nbs.top();
+        mat[(cam - 1) / n][getY(cam)] = nbs.top();
     }
 
 }
 
-void Lee(int i, int j) {
-    Q.push({ 1, 1 });
+bool inMat(int i, int j) {
+    return (i >= 0 && i < n) && (j >= 1 && j <= n);
+}
+
+void Lee() {
+    Q.push({ 0, 1 });
+    tmp[0][1] = mat[0][1];
+    cnt_cam = 1;
 
     while (!Q.empty()) {
         int ic = Q.front().first,
             jc = Q.front().second;
 
         Q.pop();
+
+        if (lastI < ic) lastI = ic;
+        if (lastJ < jc) lastJ = jc;
+
+        for (int k = 0; k < 4; k++) {
+            int iv = ic + dI[k],
+                jv = jc + dJ[k];
+
+            if (!inMat(iv, jv)) continue;
+
+            if (mat[iv][jv] > 0 && (tmp[ic][jc] + mat[iv][jv] < tmp[iv][jv] || tmp[iv][jv] == 0)) {
+                if (tmp[iv][jv] == 0) cnt_cam++;
+                tmp[iv][jv] = mat[iv][jv] + tmp[ic][jc];
+                Q.push({iv, jv});
+            }
+        }
     }
 }
 
@@ -127,6 +154,18 @@ int main()
     fin >> n >> exps;
     fin.get();
     citire();
-    Lee(1, 1);
+    Lee();
+
+    if (tmp[n - 1][n]) {
+        cout << 1 << "\n";
+        cout << cnt_cam << "\n";
+        cout << tmp[n - 1][n] << "\n";
+    }
+    else {
+        cout << 0 << "\n";
+        cout << cnt_cam << "\n";
+        cout << tmp[lastI][lastJ] << "\n";
+    }
+
     return 0;
 }
