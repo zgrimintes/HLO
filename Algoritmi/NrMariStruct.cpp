@@ -9,8 +9,8 @@ struct NrMare
 	int nr[1001];
 
 	NrMare(int n){
-		nr[0] = 1;
-		nr[1] = n;
+		nr[0] = n;
+		//nr[1] = n;
 	}
 
 	NrMare(int n, int cif[1000]) {
@@ -24,24 +24,61 @@ struct NrMare
 	void afisare() {
 		for (int i = nr[0]; i > 0; i--)
 			cout << nr[i];
+		cout << "\n";
 	}
 
-	NrMare operator +(NrMare Nr2) {
-		NrMare rez(0);
+	void operator +(NrMare Nr2) {
 
 		int lng = std::max(nr[0], Nr2.nr[0]);
 
 		for (int i = nr[0] + 1; i <= lng; i++) nr[i] = 0;
 		for (int i = Nr2.nr[0] + 1; i <= lng; i++) Nr2.nr[i] = 0;
 
-		rez.nr[0] = lng;
 		nr[0] = lng;
 		int t = 0;
 
+		for (int i = 1; i <= nr[0]; i++) {
+			nr[i] = nr[i] + Nr2.nr[i] + t;
+			t = nr[i] / 10;
+			nr[i] = nr[i] % 10;
+		}
+
+		if (t != 0) {
+			nr[0]++;
+			nr[nr[0]] = t;
+		}
+	}
+
+	void operator *(int n) {
+		int t = 0;
+		for (int i = 1; i <= nr[0]; i++) {
+			t = nr[i] * n;
+			nr[i] = t % 10;
+			t /= 10;
+		}
+
+		while (t) {
+			nr[0]++;
+			nr[nr[0]] = t % 10;
+			t /= 10;
+		}
+	}
+
+	NrMare operator *(NrMare Nr2) {
+		NrMare rez(nr[0] + Nr2.nr[0] - 1);
+
+		for (int i = 1; i <= rez.nr[0] + 1; i++)
+			rez.nr[i] = 0;
+
+		for (int i = 1; i <= nr[0]; i++) 
+			for (int j = 1; j <= Nr2.nr[0]; j++) 
+				rez.nr[i + j - 1] += nr[i] * Nr2.nr[j];
+			
+		int t = 0;
 		for (int i = 1; i <= rez.nr[0]; i++) {
-			rez.nr[i] = nr[i] + Nr2.nr[i] + t;
+			rez.nr[i] += t;
 			t = rez.nr[i] / 10;
-			rez.nr[i] = rez.nr[i] % 10;
+			rez.nr[i] %= 10;
 		}
 
 		if (t != 0) {
@@ -50,6 +87,14 @@ struct NrMare
 		}
 
 		return rez;
+	}
+
+	void operator =(NrMare Nr2) {
+		nr[0] = Nr2.nr[0];
+
+		for (int i = 1; i <= nr[0]; i++) 
+			nr[i] = Nr2.nr[i];
+		
 	}
 };
 
@@ -72,7 +117,12 @@ int main() {
 	NrMare n2(n, cif);
 
 	n1 + n2;
+	n1.afisare();
 
+	n1 * 2;
+	n1.afisare();
+
+	n1 = n1 * n2;
 	n1.afisare();
 
 	return 0;
