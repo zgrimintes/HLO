@@ -52,8 +52,8 @@ struct NrMare
 	void operator *(int n) {
 		int t = 0;
 		for (int i = 1; i <= nr[0]; i++) {
-			t = nr[i] * n;
-			nr[i] = t % 10;
+			nr[i] = nr[i] * n + t;
+			nr[i] %= 10;
 			t /= 10;
 		}
 
@@ -87,6 +87,39 @@ struct NrMare
 		}
 
 		return rez;
+	}
+
+	void operator -(NrMare Nr2) {
+		///presupun ca nr > Nr2.nr
+
+		for (int i = Nr2.nr[0] + 1; i <= nr[0]; i++)
+			Nr2.nr[i] = 0;
+
+		int t = 0;
+		for (int i = 1; i <= nr[0]; i++) {
+			nr[i] = nr[i] - Nr2.nr[i] - t;
+			if (nr[i] < 0) {
+				t = 1;
+				nr[i] += 10;
+			}
+			else t = 0;
+		}
+
+		while (nr[nr[0]] == 0 && nr[0] > 1) {
+			nr[0]--;
+		}
+	}
+
+	void operator /(int n) {
+		int r = 0;
+		for (int i = nr[0]; i > 0; i--) {
+			r = r * 10 + nr[i];
+			nr[i] = r / n;
+			r = r % n;
+		}
+
+		while (nr[nr[0]] == 0 && nr[0] > 1)
+			nr[0]--;
 	}
 
 	void operator =(NrMare Nr2) {
@@ -123,6 +156,12 @@ int main() {
 	n1.afisare();
 
 	n1 = n1 * n2;
+	n1.afisare();
+
+	n1 - n2;
+	n1.afisare();
+	
+	n1 / 100;
 	n1.afisare();
 
 	return 0;
