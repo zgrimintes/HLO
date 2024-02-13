@@ -54,7 +54,7 @@ struct NrMare
 		for (int i = 1; i <= nr[0]; i++) {
 			nr[i] = nr[i] * n + t;
 			nr[i] %= 10;
-			t /= 10;
+			t = nr[i] / 10;
 		}
 
 		while (t) {
