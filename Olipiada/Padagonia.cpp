@@ -92,3 +92,86 @@ int main()
 
     return 0;
 }
+
+///CALCUL EFICIENT ZONE LIBERE
+#include <fstream>
+#define MOD 666013
+
+typedef long long LL;
+
+using namespace std;
+
+ifstream fin("patagonia.in");
+ofstream fout("patagonia.out");
+
+bool ln[1001],
+    cl[1001];
+LL C, n, m, v, k;
+LL cnt_zone;
+
+void zone_sigure() {
+    cnt_zone = n * m;
+    while (v) {
+        int i, j;
+        fin >> i >> j;
+
+        if (!ln[j]) {
+            ln[j] = true;
+            cnt_zone -= m;
+            n--;
+        }
+
+        if (!cl[i]) {
+            cl[i] = true;
+            cnt_zone -= n;
+            m--;
+        }
+
+        v--;
+    }
+}
+
+LL factMod(LL n) {
+    LL rez = 1;
+    for (LL i = 2; i <= n; i++) {
+        rez = rez * i % MOD;
+    }
+
+    return rez % MOD;
+}
+
+LL modPow(LL b, LL e) {
+    LL rez = 1;
+    while (e) {
+        if (e & 1)
+            rez = rez * b % MOD;
+        b = b * b % MOD;
+        e /= 2;
+    }
+
+    return rez % MOD;
+}
+
+LL invMod(LL a, LL b) {
+    return modPow(a * b % MOD, MOD - 2);
+}
+
+LL solve() {
+    LL sus = factMod(k + cnt_zone - 1);
+    LL jos = invMod(factMod(cnt_zone - 1), factMod(k));
+    return sus * jos % MOD;
+}
+
+int main()
+{
+    fin >> C >> n >> m >> v >> k;
+    zone_sigure();
+    if (C == 1) fout << cnt_zone;
+    else {
+        if (cnt_zone == 0) fout << 0;
+        else if (cnt_zone == k) fout << 1;
+        else fout << solve();
+    }
+
+    return 0;
+}
