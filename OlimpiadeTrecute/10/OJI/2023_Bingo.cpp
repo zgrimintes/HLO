@@ -142,6 +142,7 @@ int main() {
 }
 
 ///REZOLVARE DE 78 DE PUNCTE
+///Rezolvarea este mai corecta(nu zic corecta pentru ca doua teste tot nu dau)
 #include <fstream>
 #include <limits.h>
 #include <cstring>
