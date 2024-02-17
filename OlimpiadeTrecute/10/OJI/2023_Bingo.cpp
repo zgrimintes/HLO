@@ -1,4 +1,9 @@
 ///REZOLVARE DE 81 DE PUNCTE
+///Rezolvarea este incorecta(chiar daca ia mai multe puncte - intra in timp). 
+///Problema e ca in varianta asta cand caut literele cele mai apropiate o sa caut mereu in stanga prima data
+///si exista posibilitatea ca literele pe care le cauti sa apara mai departe in stanga decat in dreapta.
+///De ex. ai secventa sioboibgn si esti pe pozitia 5 (i), cautand in stanga prima data o sa gasesti b-ul la distanta 2 de poz. initiala
+///dar teoretic cel mai apropiat este cel din dreapta.
 #include <fstream>
 #include <iostream>
 #include <cstring>
