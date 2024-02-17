@@ -142,7 +142,8 @@ int main() {
 }
 
 ///REZOLVARE DE 78 DE PUNCTE
-///Rezolvarea este mai corecta(nu zic corecta pentru ca doua teste tot nu dau)
+///Rezolvarea este mai corecta(nu zic corecta pentru ca doua teste tot nu dau), doar ca nu intra in timp pierzand aparent mai multe puncte
+///decat cea gresita, dar mai rapida.
 #include <fstream>
 #include <limits.h>
 #include <cstring>
