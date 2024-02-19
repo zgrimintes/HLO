@@ -1,4 +1,4 @@
-///REZOLVATA C1 PARTIAl
+///REZOLVARE C1, C2 neeficient.
 #include <fstream>
 
 #define MOD 1000000007
@@ -33,6 +33,20 @@ void citire() {
 	}
 }
 
+LL powMod2(LL e) {
+	LL rez = 2;
+	LL b = 2;
+	while (e) {
+		if (e & 1)
+			rez = rez * b % MOD;
+
+		b = b * b % MOD;
+		e /= 2;
+	}
+
+	return rez % MOD;
+}
+
 LL solve1() {
 	for (int i = ind_St - 1; i > 1; i--) {
 		for (int j = 0; j < i; j++) {
@@ -45,8 +59,16 @@ LL solve1() {
 	return cnt_rute % MOD;
 }
 
-void solve2() {
+LL solve2() {
+	for (int i = ind_St - 1; i > 1; i--) {
+		for (int j = 0; j < i; j++) {
+			if (s[i].vD != s[j].vS) continue;
 
+			cnt_rute = (cnt_rute + powMod2(i - j - 2)) % MOD;
+		}
+	}
+
+	return cnt_rute % MOD;
 }
 
 int main() {
@@ -56,7 +78,7 @@ int main() {
 	if (t == 1)
 		fout << solve1();
 	else
-		solve2();
+		fout << solve2();
 
 	return 0;
 }
