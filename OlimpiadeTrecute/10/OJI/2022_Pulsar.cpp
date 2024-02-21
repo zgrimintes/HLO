@@ -117,9 +117,6 @@ void Lee_pulsar(int nrP, int i) {
 			}
 		}
 	}
-
-
-	//while (!Q.empty()) Q.pop();
 }
 
 
