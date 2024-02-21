@@ -12,7 +12,7 @@ struct Pulsar
 };
 
 int dI[4] = { -1, 0, 1, 0 },
-	dJ[5] = { 0, 1, 0, -1 };
+	dJ[4] = { 0, 1, 0, -1 };
 
 queue <pair <int, int> > Q;
 Pulsar p[15005];
@@ -53,6 +53,7 @@ void citire() {
 		fin >> p[ind_p].x >> p[ind_p].y >> p[ind_p].r >> p[ind_p].t;
 		T = cmmmc(p[ind_p - 1].r, p[ind_p].r);
 		ind_p++;
+		cp--;
 	}
 
 
@@ -94,28 +95,31 @@ void Lee_pulsar(int nrP, int i) {
 	int rad = get_radius(i % p[nrP].r);
 
 	Q.push({ p[nrP].x, p[nrP].y });
-	mat[p[nrP].x][p[nrP].y] = 1;
 	rad--;
 
-	while (!Q.empty() && rad) {
+	while (!Q.empty()) {
 		int x = Q.front().first,
 			y = Q.front().second;
 
 		Q.pop();
-		rad--;
 		mat[x][y] = 1;
 
 		for (int k = 0; k < 4; k++) {
 			int ni = x + dI[k],
 				nj = y + dJ[k];
 
-			if (mat[ni][nj] == 0 && mat[ni][nj] != -1) {
+			if (mat[ni][nj] == 0 && rad > 0) {
 				Q.push({ ni, nj });
-				
+				rad--;
+			}
+			else {
+				rad--;
 			}
 		}
 	}
 
+
+	//while (!Q.empty()) Q.pop();
 }
 
 
@@ -123,7 +127,7 @@ int get_max_puls() {
 	
 	for (int i = 0; i < T; i++) {
 		for (int j = 0; j < P; j++) {
-			Lee_pulsar(j, i);
+			Lee_pulsar(j, i + p[j].t);
 		}
 
 		reset_mat();
