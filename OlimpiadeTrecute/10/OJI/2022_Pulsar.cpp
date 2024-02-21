@@ -1,4 +1,3 @@
-///C1 in lucru
 #include <fstream> 
 #include <queue>
 
@@ -39,6 +38,11 @@ int cmmmc(int a, int b) {
 	return a * b / cmmdc(a, b);
 }
 
+void bordare() {
+	for (int i = 0; i <= N + 1; i++)
+		mat[i][0] = mat[i][N + 1] = mat[0][i] = mat[N + 1][i] = -1;
+}
+
 void citire() {
 	int cp = P - 1;
 	fin >> p[ind_p].x >> p[ind_p].y >> p[ind_p].r >> p[ind_p].t;
@@ -63,11 +67,6 @@ void citire() {
 	fin >> xs >> ys >> xf >> yf;
 
 	bordare();
-}
-
-void bordare() {
-	for (int i = 0; i <= N + 1; i++)
-		mat[i][0] = mat[i][N + 1] = mat[0][i] = mat[N + 1][i] = -1;
 }
 
 void reset_mat() {
