@@ -1,3 +1,4 @@
+///REZOLVARE DE 100 DE PUNCTE
 #include <fstream>
 #include <cstring>
 #include <map>
@@ -20,7 +21,7 @@ int getNb(int &i) {
 	return nb;
 }
 
-void getIngredient(int i) {
+void getIngredient(int &i) {
 	char ing[21] = "";
 	int ind_i = 0;
 	while (ret[i] != ' ') {
@@ -38,15 +39,14 @@ void afisare_map() {
 
 	while (it != M.end()) {
 		fout << it->first << " " << it->second << "\n";
+		it++;
 	}
 }
 
-int main() {
-	fin.getline(ret, 1001);
-	
-	for (int i = 0; ret[i]; i++) {
+void solve() {
+	for (int i = 0; ret[i];) {
 		switch (ret[i]) {
-		case ')': 
+		case ')':
 			i++;
 			while (ret[i] == ' ') i++;
 			min_ret += getNb(i);
@@ -61,7 +61,11 @@ int main() {
 		}
 
 	}
+}
 
+int main() {
+	fin.getline(ret, 1001);
+	solve();
 
 	fout << min_ret << "\n";
 	afisare_map();
