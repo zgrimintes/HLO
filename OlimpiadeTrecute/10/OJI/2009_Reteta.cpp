@@ -1,4 +1,3 @@
-///DE TERMINAT
 #include <fstream>
 #include <cstring>
 #include <map>
@@ -12,7 +11,7 @@ map <string, int> M;
 char ret[1001];
 int min_ret;
 
-int getNb(int i) {
+int getNb(int &i) {
 	int nb = 0;
 	for (; ret[i] >= '0' && ret[i] <= '9'; i++) {
 		nb = nb * 10 + ret[i] - '0';
@@ -23,8 +22,9 @@ int getNb(int i) {
 
 void getIngredient(int i) {
 	char ing[21] = "";
+	int ind_i = 0;
 	while (ret[i] != ' ') {
-		
+		ing[ind_i++] = ret[i];
 		i++;
 	}
 
