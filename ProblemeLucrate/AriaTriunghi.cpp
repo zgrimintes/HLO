@@ -1,3 +1,4 @@
+///REZOLVARE 100 DE PUNCTE
 #include <fstream>
 #include <iomanip>
 
