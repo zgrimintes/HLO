@@ -1,6 +1,7 @@
 #include <fstream>
 #include <stack>
 #include <algorithm>
+#include <iomanip>
 
 #define NMAX 1000000001
 
@@ -16,6 +17,7 @@ struct Punct
 
 stack <Punct> S;
 Punct p[120001];
+Punct ps[120001];
 int n;
 int ind_p;
 int i_min = NMAX;
@@ -56,24 +58,20 @@ void citirePuncte() {
 }
 
 bool cmp(Punct p1, Punct p2) {
-	if (p1.x < p2.x) return true;
-	if (p1.y < p2.y) return false;
-
-	return false;
+	return p1.m < p2.m;
 }
 
 bool det(Punct a, Punct b, Punct c) {
 	float D =	a.x * b.y + b.x * c.y + a.y * c.x -
-				c.x * b.y - a.y * b.x * c.y * a.x;
+				(c.x * b.y + a.y * b.x + c.y * a.x);
 
 	return D >= 0;
 }
 
 void infasura() {
 	S.push(p[1]);
-	S.push(p[2]);
 
-	for (int i = 3; i < n; i++) {
+	for (int i = 2; i < n; i++) {
 		Punct ps1, ps2;
 		ps1 = S.top(); S.pop();
 		ps2 = S.top();
@@ -88,17 +86,40 @@ void infasura() {
 				ps1 = S.top(); S.pop();
 				ps2 = S.top();
 				S.push(ps1);
-				S.push(p[i]);
 			}
+			S.push(p[i]);
 		}
+	}
+}
+
+void getSlope() {
+	for (int i = 1; i < n; i++) {
+		if (p[i].x == p[0].x) p[i].m = NMAX;
+		else p[i].m = ((p[i].y - p[0].y) / (p[i].x - p[0].x));
+	}
+}
+
+void afisare() {
+	fout << S.size() << "\n";
+	int i = 1, bnd = S.size();
+
+	for (; i <= bnd; i++) {
+		ps[i] = S.top();
+		S.pop();
+	}
+	ps[0] = ps[i - 1];
+
+	for (int j = i - 2; j >= 0; j--) {
+		fout << fixed << setprecision(6) << ps[j].x << " " << ps[j].y << "\n";
 	}
 }
 
 int main() {
 	fin >> n;
 	citirePuncte();
+	getSlope();
 	sort(p + 1, p + n, cmp);
 	infasura();
-	fout << S.size();
+	afisare();
 	return 0;
 }
