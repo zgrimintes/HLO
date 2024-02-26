@@ -101,9 +101,9 @@ void getSlope() {
 
 void afisare() {
 	fout << S.size() << "\n";
-	int i = 1, bnd = S.size();
+	int i = 1, limit = S.size();
 
-	for (; i <= bnd; i++) {
+	for (; i <= limit; i++) {
 		ps[i] = S.top();
 		S.pop();
 	}
