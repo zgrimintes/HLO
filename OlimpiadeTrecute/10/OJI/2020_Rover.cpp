@@ -1,4 +1,4 @@
-///C1
+///REZOLVARE DE 50 DE PUNCTE - C1
 #include <fstream>
 #include <queue>
 
