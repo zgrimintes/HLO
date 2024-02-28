@@ -1,3 +1,4 @@
+///REZOLVARE DE 100 DE PUNCTE
 #include <fstream>
 #include <cstring>
 #include <limits.h>
