@@ -1,4 +1,4 @@
-///REZOLVARE DE 48 DE PUNCTE - C1, C2 parital
+///REZOLVARE DE 68 DE PUNCTE
 #include <fstream>
 #include <cstring>
 #include <limits.h>
@@ -10,11 +10,11 @@ using namespace std;
 ifstream fin("circular.in");
 ofstream fout("circular.out");
 
-int c, t_min = INT_MAX, cnt_sol = 1, t_tot;
+int c, t_min = INT_MAX, cnt_sol = 1, t_tot, ind_sol;
 int dp[30][30];
 char a[50001];
 char r[26];
-char sol[50030], ind_sol;
+char sol[50030];
 
 void solve1() {
 	t_min = 0;
