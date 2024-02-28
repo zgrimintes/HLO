@@ -49,14 +49,6 @@ void citire() {
 	T = p[ind_p].r;
 	ind_p++;
 
-	if (cp > 0) {
-		fin >> p[ind_p].x >> p[ind_p].y >> p[ind_p].r >> p[ind_p].t;
-		T = cmmmc(p[ind_p - 1].r, p[ind_p].r);
-		ind_p++;
-		cp--;
-	}
-
-
 	while (cp) {
 		fin >> p[ind_p].x >> p[ind_p].y >> p[ind_p].r >> p[ind_p].t;
 
@@ -79,42 +71,27 @@ void reset_mat() {
 
 }
 
-int get_radius(int s) {
-	int rez = 1, plus = 4;
-
-	while (s) {
-		rez = rez + plus;
-		plus += 4;
-		s--;
-	}
-
-	return rez;
-}
-
 void Lee_pulsar(int nrP, int i) {
-	int rad = get_radius(i % p[nrP].r);
+	int xs = p[nrP].x,
+		ys = p[nrP].y;
 
 	Q.push({ p[nrP].x, p[nrP].y });
-	rad--;
 
 	while (!Q.empty()) {
 		int x = Q.front().first,
 			y = Q.front().second;
 
 		Q.pop();
+		if (abs(xs - x) + abs(ys - y) >= i + 1) continue;
+
 		mat[x][y] = 1;
 
 		for (int k = 0; k < 4; k++) {
 			int ni = x + dI[k],
 				nj = y + dJ[k];
 
-			if (mat[ni][nj] == 0 && rad > 0) {
+			if (mat[ni][nj] == 0) 
 				Q.push({ ni, nj });
-				rad--;
-			}
-			else {
-				rad--;
-			}
 		}
 	}
 }
@@ -124,7 +101,7 @@ int get_max_puls() {
 	
 	for (int i = 0; i < T; i++) {
 		for (int j = 0; j < P; j++) {
-			Lee_pulsar(j, i + p[j].t);
+			Lee_pulsar(j, (i + p[j].t) % p[j].r);
 		}
 
 		reset_mat();
