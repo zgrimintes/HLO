@@ -1,4 +1,3 @@
-///REZOLVARE DE 68 DE PUNCTE
 #include <fstream>
 #include <cstring>
 #include <limits.h>
@@ -14,7 +13,7 @@ int c, t_min = INT_MAX, cnt_sol = 1, t_tot, ind_sol;
 int dp[30][30];
 char a[50001];
 char r[26];
-char sol[50030];
+char sol[100010];
 
 void solve1() {
 	t_min = 0;
