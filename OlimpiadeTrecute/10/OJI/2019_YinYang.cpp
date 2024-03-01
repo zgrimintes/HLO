@@ -1,4 +1,4 @@
-///23 PUNCTE - C1
+///100 DE PUNCTE
 #include <fstream>
 #include <algorithm>
 
@@ -39,13 +39,13 @@ bool cmpJ(int a, int b) {
 }
 
 bool verif() {
-	for (int i = 1; i <= m; i++)
-		indsI[i] = i;
-	sort(indsI, indsI + m, cmpI);
-
 	for (int i = 1; i <= n; i++)
+		indsI[i] = i;
+	sort(indsI + 1, indsI + n + 1, cmpI);
+
+	for (int i = 1; i <= m; i++)
 		indsJ[i] = i;
-	sort(indsJ, indsJ + n, cmpJ);
+	sort(indsJ + 1, indsJ + m + 1, cmpJ);
 
 	for (int i = 1; i <= n; i++)
 		for (int j = 1; j <= m;j++)
@@ -53,14 +53,19 @@ bool verif() {
 
 	for (int i = 1; i <= n; i++)
 		for (int j = 1; j <= m;j++)
-			if (nMat[i][j] < nMat[i][j - 1] && nMat[i][j] > nMat[i - 1][j]) return false;
+			if (nMat[i][j] < nMat[i][j - 1] || nMat[i][j] < nMat[i - 1][j]) return false;
 
 	return true;
 }
 
 void solve() {
-	
-			
+	for (int i = 2; i <= n; i++)
+		for (int j = 1; j < i; j++)
+			cnt_swaps += (indsI[i] < indsI[j]);
+
+	for (int i = 2; i <= m; i++)
+		for (int j = 1; j < i; j++)
+			cnt_swaps += (indsJ[i] < indsJ[j]);
 }
 
 int main() {
