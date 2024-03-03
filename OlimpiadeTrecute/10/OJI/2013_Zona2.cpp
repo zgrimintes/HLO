@@ -73,7 +73,7 @@ void bordare_reset() {
 		mat[i][0] = mat[i][n + 1] = mat[0][i] = mat[n + 1][i] = -1;
 }
 
-void stephs() {
+void steps() {
 	int step;
 	int x = xs,
 		y = ys;
@@ -100,7 +100,7 @@ void stephs() {
 
 int main() {
 	fin >> xs >> ys >> n >> p;
-	stephs();
+	steps();
 	
 	for (int i = 0; i <= n; i++)
 		for (int j = 0; j <= n; j++)
