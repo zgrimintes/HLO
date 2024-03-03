@@ -42,6 +42,9 @@ void fill(int i, int j) {
 
 void moveDir(int dir, int &x, int &y) {
 	x += dI[dir - 1]; y += dJ[dir - 1];
+	///Codific traseul ca fiind pereti, astefl salvez pe fiecare pozitie din matrice
+	///un numar de la 1 la 15 care sa determine directile in care are pereti 
+	///folosindu-se de bitii din reprezentarea lui in baza 2.
 	
 	switch (dir)
 	{
