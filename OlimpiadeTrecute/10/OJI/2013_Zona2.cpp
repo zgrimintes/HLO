@@ -12,7 +12,7 @@ struct Drum {
 
 Drum d[5000];
 int dI[4] = { -1, 0, 1, 0 },
-	dJ[4] = { 0, 1, 0, -1 };
+    dJ[4] = { 0, 1, 0, -1 };
 int mat[55][55], mat_fin[55][55];
 int n, xs, ys, p, ds = -1, cnt_pat;
 bool inside = true;
@@ -83,6 +83,8 @@ void steps() {
 		d[i].y = y;
 
 		if (mat[x][y] == 1) {
+			///In cazul in care am mai trecut prin intersectia actuala, caut exact a cata intersectie 
+			///este de la inceputul drumului, apoi determin lungimea traseului care formeaza zona inchisa.
 			srchIntersection(i);
 			break;
 		}
@@ -95,7 +97,7 @@ void steps() {
 
 	fout << p - ds << "\n";
 
-	bordare_reset();
+	bordare_reset(); ///Reutilizez matricea pentru fill
 }
 
 int main() {
@@ -104,7 +106,13 @@ int main() {
 	
 	for (int i = 0; i <= n; i++)
 		for (int j = 0; j <= n; j++)
-			if (((mat[i][j] & 1) == 0) && (((mat[i][j] >> 3) & 1) == 0)) {
+			///Caut primul colt format si incep fill-ul.
+			///Aici apar doua cazuri:
+			///1. Cand restul traseului (de la inceput pana la intersectia comuna) este in interiorul zonei delimitate.
+			///2. Cand restul traseului este in afara zonei delimitate.
+			///Astfel pentru primul caz o sa afisez numarul de patrate la care am dat fill, iar pentru al doilea,
+			///numarul total de patrate minus cele umplute.
+			if (((mat[i][j] & 1) == 0) && (((mat[i][j] >> 3) & 1) == 0)) { 
 				fill(i, j);
 
 				if (inside) fout << cnt_pat;
