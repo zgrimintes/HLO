@@ -1,4 +1,4 @@
-///NU FOARTE CORECT C2
+///54 PUNCTE, C2 CORECTA PARTIAL
 #include <fstream>
 #include <cstring>
 #include <algorithm>
@@ -60,7 +60,7 @@ void getEq() {
 			cpy[3] = nec[3] * j;
 
 			rezs[0][ind_r] = cpy[0] + cpy[1] + rez;
-			rezs[1][ind_r] = cpy[2] + cpy[3] + E;
+			rezs[1][ind_r] = E - cpy[2] - cpy[3];
 			ind_r++;
 		}
 	}
