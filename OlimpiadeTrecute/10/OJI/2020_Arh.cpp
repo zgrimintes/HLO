@@ -1,4 +1,4 @@
-///EXEMPLU CORECT
+///REZOLVARE DE 40 DE PUNCTE
 #include <fstream>
 #include <cstring>
 #include <stack>
@@ -9,6 +9,7 @@ ifstream fin("arh.in");
 ofstream fout("arh.out");
 
 stack <char> smn, par, lit;
+stack <int> nr;
 char arh[10001], rez[100001];
 int p, cnt_op;
 char temp[100];
@@ -38,7 +39,7 @@ void makePalindrom() {
 }
 
 void concatenations() {
-	for (int i = smn.top() - '0'; i > 0; i--) {
+	for (int i = nr.top(); i > 0; i--) {
 		for (int j = ind_temp - 1; j >= 0; j--)
 		{
 			lit.push(temp[j]);
@@ -48,10 +49,16 @@ void concatenations() {
 }
 
 void pushDefault() {
-	if (arh[p] >= '0' && arh[p] <= '9') smn.push(arh[p]);
+	if (arh[p] >= '0' && arh[p] <= '9') {
+		int nb = 0;
+		for (;arh[p] >= '0' && arh[p] <= '9'; p++)
+			nb = nb * 10 + arh[p] - '0';
+		nr.push(nb);
+	}
 	else {
 		lit.push(arh[p]);
 		par.push('.');
+		p++;
 	}
 }
 
@@ -92,7 +99,7 @@ void solve() {
 			break;
 		case ')':
 			closeBracket();
-			smn.pop();
+			nr.pop();
 			p++;
 			break;
 		case ']':
@@ -107,7 +114,6 @@ void solve() {
 			break;
 		default:
 			pushDefault();
-			p++;
 			break;
 		}
 	}
