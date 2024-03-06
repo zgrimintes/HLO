@@ -1,4 +1,4 @@
-///REZOLVARE DE 73 DE PUNCTE
+///REZOLVARE DE 100 DE PUNCTE
 #include <fstream>
 #include <cstring>
 #include <stack>
@@ -12,7 +12,7 @@ stack <char> smn, par, lit;
 stack <int> nr;
 char arh[10001], rez[100001];
 int p, cnt_op;
-char temp[10000];
+char temp[100000];
 int ind_temp = 0;
 
 void makePalindrom() {
