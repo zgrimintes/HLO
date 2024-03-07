@@ -1,3 +1,4 @@
+///REZOLVARE DE 100 DE PUNCTE
 #include <fstream>
 #include <stack>
 #include <algorithm>
@@ -70,7 +71,7 @@ void infasura() {
 			S.push(p[i]);
 		}
 		else {
-			while (!det(ps2, ps1, p[i]) && S.size() >= 2) { /// + cel putin doua puncte
+			while (!det(ps2, ps1, p[i]) && S.size() >= 2) {
 				S.pop();
 				ps1 = S.top(); S.pop();
 				ps2 = S.top();
