@@ -22,7 +22,7 @@ int n;
 int ind_p;
 int i_min = NMAX;
 
-void citirePuncte() {
+void citirePuncte() { ///Schimba citirea ):
 	int next = 0;
 	int cn = n;
 	while (cn) {
@@ -81,7 +81,7 @@ void infasura() {
 			S.push(p[i]);
 		}
 		else {
-			while (!det(ps2, ps1, p[i])) {
+			while (!det(ps2, ps1, p[i])) { /// + cel putin doua puncte
 				S.pop();
 				ps1 = S.top(); S.pop();
 				ps2 = S.top();
