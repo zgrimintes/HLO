@@ -12,7 +12,7 @@ ofstream fout("infasuratoare.out");
 
 struct Punct
 {
-	float x, y, m;
+	double x, y, m;
 };
 
 stack <Punct> S;
@@ -22,31 +22,20 @@ int n;
 int ind_p;
 int i_min = NMAX;
 
-void citirePuncte() { ///Schimba citirea ):
+void citirePuncte() {
 	int next = 0;
 	int cn = n;
 	while (cn) {
-		char temp;
-		int i, j;
+		fin >> p[ind_p].x >> p[ind_p].y;
 
-		fin >> i;
-		fin >> temp;
-		fin >> j;
-		next++;
-		
-		if (next % 2 == 0) {
-			p[ind_p].y = (float)((i * 10 + j) / 10);
-
-			if (i_min == NMAX || p[ind_p].x < p[i_min].x)
-				i_min = ind_p;
-			else if (p[ind_p].x == p[i_min].x)
-				if (p[ind_p].y < p[i_min].y)
-					i_min = ind_p;
+        if (i_min == NMAX || p[ind_p].x < p[i_min].x)
+            i_min = ind_p;
+        else if (p[ind_p].x == p[i_min].x)
+            if (p[ind_p].y < p[i_min].y)
+                i_min = ind_p;
 
 			ind_p++;
 			cn--;
-		}
-		else p[ind_p].x = (float)((i * 10 + j) / 10);
 	}
 
 	S.push(p[i_min]);
@@ -62,7 +51,7 @@ bool cmp(Punct p1, Punct p2) {
 }
 
 bool det(Punct a, Punct b, Punct c) {
-	float D =	a.x * b.y + b.x * c.y + a.y * c.x -
+	double D =	a.x * b.y + b.x * c.y + a.y * c.x -
 				(c.x * b.y + a.y * b.x + c.y * a.x);
 
 	return D >= 0;
@@ -81,7 +70,7 @@ void infasura() {
 			S.push(p[i]);
 		}
 		else {
-			while (!det(ps2, ps1, p[i])) { /// + cel putin doua puncte
+			while (!det(ps2, ps1, p[i]) && S.size() >= 2) { /// + cel putin doua puncte
 				S.pop();
 				ps1 = S.top(); S.pop();
 				ps2 = S.top();
