@@ -32,7 +32,6 @@ void solve(){
         if (!D.empty()){
             if (D.front() + k <= i){
                 D.pop_front();
-                ///v_max = MAX;
             }
 
             while (!D.empty() && vec[i] < vec[D.back()])
