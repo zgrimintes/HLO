@@ -1,6 +1,6 @@
-///DE TERMINAT!!!
 #include <fstream>
 #include <deque>
+#include <functional>
 
 using namespace std;
 
@@ -15,20 +15,20 @@ int maxim[1005][1005];
 int dx, dy;
 int ind_s;
 
-void citire(){
-    for (int i = 0; i < n; i ++)
+void citire() {
+    for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++)
             fin >> mat[i][j];
 }
 
-void calc(deque D, bool m, int i, int j){
+void calc(deque <int> &D, function<bool(int x, int y)> cmp, int i, int j) {
     if (!D.empty()) {
         if (D.front() + dx <= j) {
             ind_s++;
-            Dm.pop_front();
+            D.pop_front();
         }
 
-        while (!D.empty() && (m) ? (mat[i][j] < mat[i][D.back()]) : (mat[i][j] > mat[i][D.back()]))
+        while (!D.empty() && cmp(mat[i][j], mat[i][D.back()]))
             D.pop_back();
 
         D.push_back(j);
@@ -36,32 +36,38 @@ void calc(deque D, bool m, int i, int j){
     else D.push_back(j);
 }
 
-void calcMinMax(){
+void emptyDeque(deque <int>& D) {
+    while (!D.empty()) D.pop_back();
+}
+
+void calcMinMax() {
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++){
+        for (int j = 0; j <= m; j++) {
             if (j >= dx && !Dm.empty())
                 minim[i][ind_s] = Dm.front();
 
             if (j >= dx && !DM.empty())
                 maxim[i][ind_s] = DM.front();
 
-            calc(Dm, 1, i, j);
-            calc(DM, 0, i, j);
+            calc(Dm, [](int x, int y) { return x < y;}, i, j);
+            calc(DM, [](int x, int y) { return x > y;}, i, j);
 
         }
-
+        ind_s = 0;
+        emptyDeque(Dm);
+        emptyDeque(DM);
     }
 }
 
-void solve(){
-    while (p){
+void solve() {
+    while (p) {
         fin >> dx >> dy;
         calcMinMax();
         p--;
     }
 }
 
-int main(){
+int main() {
     fin >> n >> m >> p;
     citire();
     solve();
