@@ -14,7 +14,7 @@ int minim[1005][1005];
 int maxim[1005][1005];
 int dx, dy;
 int ind_m, ind_M;
-int min_loc, max_loc;
+int min_loc, cnt_min;
 
 void citire() {
     for (int i = 0; i < n; i++)
@@ -77,6 +77,16 @@ void calcMinMax(int d) {
     }
 }
 
+void getBarDif(int M, int m) {
+    if (M - n < 0) return;
+
+    if ((M - m) < min_loc) {
+        min_loc = M - m;
+        cnt_min = 1;
+    }
+    else if ((M - m) == min_loc) cnt_min++;
+}
+
 void calcMinMaxTot(int d) {
     int minT = 10000, maxT = -1;
     ind_m = 0;
@@ -92,14 +102,14 @@ void calcMinMaxTot(int d) {
             }
 
             if (j >= d && !DM.empty()) {
-                maxT = mat[Dm.front()][maxim[Dm.front()][i]];
+                maxT = mat[DM.front()][maxim[DM.front()][i]];
                 maxim[ind_M++][i] = DM.front();
             }
 
             calcTot(Dm, [](int x, int y) { return x < y;}, i, j, minim, d);
             calcTot(DM, [](int x, int y) { return x > y;}, i, j, maxim, d);
 
-
+            getBarDif(maxT, minT);
         }
         ind_m = 0;
         ind_M = 0;
@@ -110,11 +120,12 @@ void calcMinMaxTot(int d) {
 
 void solve() {
     while (p) {
+        min_loc = 100000;
+
         fin >> dx >> dy;
         calcMinMax(dy);
         calcMinMaxTot(dx);
-
-        min_loc = max_loc = 0;
+        fout << min_loc << " " << cnt_min;
         p--;
     }
 }
