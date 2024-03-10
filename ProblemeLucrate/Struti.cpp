@@ -1,3 +1,4 @@
+///Exemplu
 #include <fstream>
 #include <deque>
 #include <functional>
@@ -36,13 +37,14 @@ void calc(deque <int> &D, function<bool(int x, int y)> cmp, int i, int j, int d)
 }
 
 void calcTot(deque <int>& D, function<bool(int x, int y)> cmp, int i, int j, int m[][1005], int d) {
+    int toSubtract = 1;
     if (!D.empty()) {
         if (D.front() + d <= j) {
             D.pop_front();
         }
 
-        while (!D.empty() && cmp(mat[j][m[j][i]], mat[j - 1][m[D.back()][i]]))
-            D.pop_back();
+        while (!D.empty() && cmp(mat[j][m[j][i]], mat[j - toSubtract][m[D.back()][i]]))
+            D.pop_back(), toSubtract++;
     }
 
     D.push_back(j);
@@ -87,14 +89,14 @@ void getBarDif(int M, int m) {
     else if ((M - m) == min_loc) cnt_min++;
 }
 
-void calcMinMaxTot(int d) {
+void calcMinMaxTot(int d, int m) {
     int minT = 10000, maxT = -1;
     ind_m = 0;
     ind_M = 0;
     emptyDeque(Dm);
     emptyDeque(DM);
 
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i <= m; i++) {
         for (int j = 0; j <= n; j++) {
             if (j >= d && !Dm.empty()) {
                 minT = mat[Dm.front()][minim[Dm.front()][i]];
@@ -121,11 +123,18 @@ void calcMinMaxTot(int d) {
 void solve() {
     while (p) {
         min_loc = 100000;
+        cnt_min = 0;
 
         fin >> dx >> dy;
         calcMinMax(dy);
-        calcMinMaxTot(dx);
-        fout << min_loc << " " << cnt_min;
+        calcMinMaxTot(dx, m / dy);
+
+        if (dx != dy) {
+            calcMinMax(dx);
+            calcMinMaxTot(dy, m / dx);
+        }
+
+        fout << min_loc << " " << cnt_min << '\n';
         p--;
     }
 }
