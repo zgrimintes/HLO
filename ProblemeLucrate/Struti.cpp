@@ -1,4 +1,4 @@
-///continuat
+///
 #include <fstream>
 #include <deque>
 #include <functional>
@@ -60,6 +60,8 @@ void calcMinMax(int d) {
     emptyDeque(DM);
     
     for (int i = 0; i < n; i++) {
+        cnt_col = 0;
+
         for (int j = 0; j <= m; j++) {
             if (j >= d && !Dm.empty())
                 minim[i][ind_m++] = Dm.front(), cnt_col++;
@@ -73,7 +75,6 @@ void calcMinMax(int d) {
         }
         ind_m = 0;
         ind_M = 0;
-        cnt_col = 0;
         emptyDeque(Dm);
         emptyDeque(DM);
     }
@@ -96,7 +97,7 @@ void calcMinMaxTot(int d, int m) {
     emptyDeque(Dm);
     emptyDeque(DM);
 
-    for (int i = 0; i <= m; i++) {
+    for (int i = 0; i < m; i++) {
         for (int j = 0; j <= n; j++) {
             if (j >= d && !Dm.empty()) {
                 minT = mat[Dm.front()][minim[Dm.front()][i]];
