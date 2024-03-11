@@ -130,7 +130,6 @@ void solve() {
         fin >> dx >> dy;
         calcMinMax(dy);
         calcMinMaxTot(dx, cnt_col);
-        cnt_col = 0;
 
         if (dx != dy) {
             calcMinMax(dx);
