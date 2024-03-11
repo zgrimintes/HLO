@@ -17,7 +17,7 @@ dJ[4] = { 0, 1, 0, -1 };
 
 queue <pair <int, int> > Q;
 Pulsar p[15005];
-int mat[505][505];
+int mat[505][505][61];
 int mat_verif[505][505];
 int C, N, P;
 int xs, ys, xf, yf;
@@ -42,7 +42,8 @@ int cmmmc(int a, int b) {
 
 void bordare() {
 	for (int i = 0; i <= N + 1; i++)
-		mat[i][0] = mat[i][N + 1] = mat[0][i] = mat[N + 1][i] = -1;
+		for (int j = 0; j < 60; j++)
+		mat[i][0][j] = mat[i][N + 1][j] = mat[0][i][j] = mat[N + 1][i][j] = -1;
 }
 
 void citire() {
@@ -67,9 +68,11 @@ void citire() {
 void reset_mat() {
 	for (int i = 1; i <= N; i++)
 		for (int j = 1; j <= N; j++) {
-			if (mat[i][j] == 1) cnt_puls++;
-			mat[i][j] = 0;
-			mat_verif[i][j] = -1;
+			for (int t = 0; t < 60; t++) {
+				if (mat[i][j][t] == 1) cnt_puls++;
+				mat[i][j][t] = 0;
+				mat_verif[i][j] = -1;
+			}
 		}
 
 }
@@ -79,7 +82,7 @@ void resetVerif() {
 			mat_verif[i][j] = 0;
 }
 
-void Lee_pulsar(int nrP, int i) {
+void Lee_pulsar(int nrP, int i, int t) {
 	int xs = p[nrP].x,
 		ys = p[nrP].y;
 
@@ -92,14 +95,14 @@ void Lee_pulsar(int nrP, int i) {
 		Q.pop();
 		if (abs(xs - x) + abs(ys - y) > i) continue;
 
-		mat[x][y] = 1;
+		mat[x][y][t] = 1;
 		mat_verif[x][y] = nrP;
 
 		for (int k = 0; k < 4; k++) {
 			int ni = x + dI[k],
 				nj = y + dJ[k];
 
-			if (mat_verif[ni][nj] != nrP && mat[ni][nj] != -1)
+			if (mat_verif[ni][nj] != nrP && mat[ni][nj][t] != -1)
 				Q.push({ ni, nj });
 		}
 	}
@@ -110,7 +113,7 @@ int get_max_puls() {
 	reset_mat();
 
 	for (int i = 0; i < T; i++) {
-		for (int j = 0; j < P; j++) { Lee_pulsar(j, (i + p[j].t) % p[j].r); }
+		for (int j = 0; j < P; j++) { Lee_pulsar(j, (i + p[j].t) % p[j].r, i); }
 
 		reset_mat();
 
