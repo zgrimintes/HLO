@@ -1,3 +1,4 @@
+///8 PUNCTE
 #include <fstream> 
 #include <queue>
 
@@ -17,6 +18,7 @@ int dI[4] = { -1, 0, 1, 0 },
 queue <pair <int, int> > Q;
 Pulsar p[15005];
 int mat[505][505];
+int mat_verif[505][505];
 int C, N, P;
 int xs, ys, xf, yf;
 int ind_p;
@@ -70,6 +72,11 @@ void reset_mat() {
 		}
 
 }
+void resetVerif() {
+	for (int i = 1; i <= N; i++)
+		for (int j = 1; j <= N; j++)
+			mat_verif[i][j] = 0;
+}
 
 void Lee_pulsar(int nrP, int i) {
 	int xs = p[nrP].x,
@@ -82,15 +89,15 @@ void Lee_pulsar(int nrP, int i) {
 			y = Q.front().second;
 
 		Q.pop();
-		if (abs(xs - x) + abs(ys - y) >= i + 1) continue;
+		if (abs(xs - x) + abs(ys - y) > i) continue;
 
-		mat[x][y] = 1;
+		mat[x][y] = mat_verif[x][y] = 1;
 
 		for (int k = 0; k < 4; k++) {
 			int ni = x + dI[k],
 				nj = y + dJ[k];
 
-			if (mat[ni][nj] == 0) 
+			if (mat_verif[ni][nj] == 0) 
 				Q.push({ ni, nj });
 		}
 	}
@@ -102,6 +109,7 @@ int get_max_puls() {
 	for (int i = 0; i < T; i++) {
 		for (int j = 0; j < P; j++) {
 			Lee_pulsar(j, (i + p[j].t) % p[j].r);
+			resetVerif();
 		}
 
 		reset_mat();
