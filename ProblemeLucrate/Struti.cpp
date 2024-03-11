@@ -1,4 +1,4 @@
-///REZOLVARE DE 80 PUNCTE
+///REZOLVARE DE 100 DE PUNCTE
 #include <fstream>
 #include <deque>
 #include <functional>
@@ -81,7 +81,7 @@ void calcMinMax(int d) {
 }
 
 void getBarDif(int M, int m) {
-    if (M - n < 0) return;
+    if (M - m < 0) return;
 
     if ((M - m) < min_loc) {
         min_loc = M - m;
