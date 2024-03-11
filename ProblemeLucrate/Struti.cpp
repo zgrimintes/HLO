@@ -1,4 +1,3 @@
-///20 PUNCTE
 #include <fstream>
 #include <deque>
 #include <functional>
@@ -118,6 +117,7 @@ void calcMinMaxTot(int d, int m) {
         ind_M = 0;
         emptyDeque(Dm);
         emptyDeque(DM);
+        minT = 10000, maxT = -1;
     }
 }
 
