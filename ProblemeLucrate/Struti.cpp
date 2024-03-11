@@ -1,3 +1,4 @@
+///continuat
 #include <fstream>
 #include <deque>
 #include <functional>
@@ -14,7 +15,7 @@ int minim[1005][1005];
 int maxim[1005][1005];
 int dx, dy;
 int ind_m, ind_M;
-int min_loc, cnt_min;
+int min_loc, cnt_min, cnt_col;
 
 void citire() {
     for (int i = 0; i < n; i++)
@@ -61,7 +62,7 @@ void calcMinMax(int d) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= m; j++) {
             if (j >= d && !Dm.empty())
-                minim[i][ind_m++] = Dm.front();
+                minim[i][ind_m++] = Dm.front(), cnt_col++;
 
             if (j >= d && !DM.empty())
                 maxim[i][ind_M++] = DM.front();
@@ -72,6 +73,7 @@ void calcMinMax(int d) {
         }
         ind_m = 0;
         ind_M = 0;
+        cnt_col = 0;
         emptyDeque(Dm);
         emptyDeque(DM);
     }
@@ -125,11 +127,12 @@ void solve() {
 
         fin >> dx >> dy;
         calcMinMax(dy);
-        calcMinMaxTot(dx, m / dy);
+        calcMinMaxTot(dx, cnt_col);
+        cnt_col = 0;
 
         if (dx != dy) {
             calcMinMax(dx);
-            calcMinMaxTot(dy, m / dx);
+            calcMinMaxTot(dy, cnt_col);
         }
 
         fout << min_loc << " " << cnt_min << '\n';
