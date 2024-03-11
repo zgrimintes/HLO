@@ -1,3 +1,4 @@
+///REZOLVARE DE 80 PUNCTE
 #include <fstream>
 #include <deque>
 #include <functional>
