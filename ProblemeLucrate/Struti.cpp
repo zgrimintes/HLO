@@ -1,4 +1,3 @@
-///Exemplu
 #include <fstream>
 #include <deque>
 #include <functional>
@@ -37,14 +36,13 @@ void calc(deque <int> &D, function<bool(int x, int y)> cmp, int i, int j, int d)
 }
 
 void calcTot(deque <int>& D, function<bool(int x, int y)> cmp, int i, int j, int m[][1005], int d) {
-    int toSubtract = 1;
     if (!D.empty()) {
         if (D.front() + d <= j) {
             D.pop_front();
         }
 
-        while (!D.empty() && cmp(mat[j][m[j][i]], mat[j - toSubtract][m[D.back()][i]]))
-            D.pop_back(), toSubtract++;
+        while (!D.empty() && cmp(mat[j][m[j][i]], mat[D.back()][m[D.back()][i]]))
+            D.pop_back();
     }
 
     D.push_back(j);
