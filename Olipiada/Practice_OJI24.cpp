@@ -32,21 +32,30 @@ void empty_stl() {
 }
 
 void solve_query() {
+	bool verified = false;
+
 	for (int i = 0; i < n; i++){
+		verified = false;
 		fin >> ai;
 		M[ai]++;
 		D.push_back(ai);
 
 		if (M.size() > 3) {
 			get_secv(ai);
-			M.erase(first);
-			D.pop_front();
+			M.erase(first); ///Problema apare aici cand tu stergi toate instantele unui numar chiar daca inca poate face parte din sir.
+					///ex: 1 1 4 4 7 2 4 4 1 2 2 1; o sa ajunga D-ul sa arate asa: 4 4 7 2 4 4, iar cand vine 1 o sa se schimbe in
+					/// 7 2 4 4 1 care e corect deoarece 7 ar trebui sa dispara si sa ramanem cu 2 4 4... 
+					///Pacat ca in map se sterg complet instantele lui 4. De aceea aleg sa sterg doar aparitile in fata deque-ului, 
+					///iar daca in map valoarea salvata nr respectiv ajunge <= 0, doar atunci il sterg de tot.
+			int f = D.front();
+			while (D.front() == f) D.pop_front(); 
+			verified = true;
 		}
 
 		cnt_secv = 0;
 	}
 
-	if (!max_secv) get_secv(-1);
+	if (!verified) get_secv(-1);
 
 	empty_stl();
 }
