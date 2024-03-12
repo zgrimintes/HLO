@@ -128,9 +128,6 @@ void Lee3D() {
 
 		Q.pop(); T_Q.pop();
 
-		//if (mat[x][y][t_act] <= -1) continue;
-		//mat[x][y][t_act] = 1;
-
 		for (int k = 0; k < 5; k++) {
 			int ni = x + dI[k],
 				nj = y + dJ[k];
