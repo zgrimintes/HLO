@@ -1,4 +1,4 @@
-///41 PUNCTE
+///88 PUNCTE
 #include <fstream> 
 #include <queue>
 
@@ -145,6 +145,15 @@ void Lee3D() {
 	}
 }
 
+int min_reach() {
+	int min_r = 10000001;
+	for (int i = 0; i < T; i++)
+		if (mat[i][xf][yf] < min_r && mat[i][xf][yf] >= 0)
+			min_r = mat[i][xf][yf];
+
+	return min_r;
+}
+
 int main() {
 	fin >> C >> N >> P;
 	citire();
@@ -156,7 +165,7 @@ int main() {
 	}
 	else {
 		Lee3D();
-		fout << mat[(t_act + 1) % T][xf][yf];
+		fout << min_reach();
 	}
 
 	return 0;
