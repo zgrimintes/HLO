@@ -1,4 +1,4 @@
-///Exmeplu
+///10 PUNCTE
 #include <fstream>
 #include <algorithm>
 
@@ -39,14 +39,6 @@ bool cond(Copil c1, Copil c2) {
     return c1.Si < c2.Si;
 }
 
-int min(Copil c) {
-    return min(c.Si, c.Fi);
-}
-
-int max(Copil c) {
-    return max(c.Si, c.Fi);
-}
-
 LL modpow(LL b, LL e) {
     LL rez = 1;
     while (e) {
@@ -65,19 +57,29 @@ LL invmod(LL a, LL b) {
 }
 
 LL comb(LL N, LL K) {
+    if (N == 0) return 0;
+
     return fact[N] * invmod(fact[N - K], fact[K]) % MOD;
+}
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
 }
 
 void solve() {
     for (int i = 0; i < n - k; i++) {
         for (int j = i + 1; j < n; j++) {
-            if (min(copii[i]) <= max(copii[j])) {
-                cnt_dir[copii[i].drp]++;
-            }
+            if (max(copii[i].Si, copii[i].Fi) >= min(copii[j].Si, copii[j].Fi))
+                cnt_dir[copii[j].drp]++;
         }
 
-        moduri += comb(cnt_dir[0] + cnt_dir[1], k - 1) - comb(cnt_dir[copii[i].drp], k - 1);
-        copii[i].drp ? cnt_dir[1]-- : cnt_dir[0]--;
+        moduri += (comb(cnt_dir[0] + cnt_dir[1], k - 1) - comb(cnt_dir[copii[i].drp], k - 1)) % MOD;
+        //copii[i].drp ? cnt_dir[1]-- : cnt_dir[0]--;
+        cnt_dir[0] = cnt_dir[1] = 0;
     }
 }
 
