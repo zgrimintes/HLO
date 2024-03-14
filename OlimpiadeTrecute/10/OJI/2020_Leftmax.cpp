@@ -1,4 +1,4 @@
-///10 PUNCTE
+///20 PUNCTE
 #include <fstream>
 
 #define MOD 1000000007
