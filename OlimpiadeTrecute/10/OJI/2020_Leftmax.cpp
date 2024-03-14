@@ -1,4 +1,4 @@
-///80 PUNCTE
+///100 PUNCTE
 #include <fstream>
 #include <stack>
 
@@ -13,14 +13,14 @@ stack <int> S;
 int n;
 int s[100001], d[100001];
 int nr[100001];
-int cnt_mod;
+long long cnt_mod;
 
 void citire() {
     for (int i = 1; i <= n; i++) 
         fin >> nr[i];
 }
 
-int gauss(int n) {
+long long gauss(long long n) {
     return (n * (n + 1)) / 2;
 }
 
