@@ -1,4 +1,4 @@
-///10 PUNCTE
+///40 PUNCTE
 #include <fstream>
 #include <algorithm>
 
@@ -13,11 +13,11 @@ ifstream fin("fotbal.in");
 ofstream fout("fotbal.out");
 
 struct Copil {
-    int Si, Fi;
-    bool drp;
+    int pos;
+    bool ev, drp;
 };
 
-Copil copii[NMAX];
+Copil copii[NMAX * 2 + 1];
 LL fact[NMAX];
 int n, k;
 LL cnt_dir[2];
@@ -29,14 +29,12 @@ void precalc() {
 }
 
 void citire() {
-    for (int i = 0; i < n; i++) {
-        fin >> copii[i].Si >> copii[i].Fi >> copii[i].drp;
-        ///copii[i].drp ? cnt_dir[1]++ : cnt_dir[0]++;
+    for (int i = 1; i <= n; i++) {
+        int x, y, z;
+        fin >> x >> y >> z;
+        copii[2 * i - 2] = { x, true, (bool)z };
+        copii[2 * i - 1] = { y, false, (bool)z };
     }
-}
-
-bool cond(Copil c1, Copil c2) {
-    return c1.Si < c2.Si;
 }
 
 LL modpow(LL b, LL e) {
@@ -58,29 +56,25 @@ LL invmod(LL a, LL b) {
 
 LL comb(LL N, LL K) {
     if (N == 0) return 0;
+    if (N < K) return 0;
 
     return fact[N] * invmod(fact[N - K], fact[K]) % MOD;
 }
 
-int min(int a, int b) {
-    return a < b ? a : b;
-}
-
-int max(int a, int b) {
-    return a > b ? a : b;
-}
-
 void solve() {
-    for (int i = 0; i < n - k; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (max(copii[i].Si, copii[i].Fi) >= min(copii[j].Si, copii[j].Fi))
-                cnt_dir[copii[j].drp]++;
+    for (int i = 0; i < 2 * n; i++) {
+        if (copii[i].ev) cnt_dir[copii[i].drp]++;
+        else {
+            cnt_dir[copii[i].drp]--;
+            moduri = (moduri + (comb(cnt_dir[0] + cnt_dir[1], k - 1) + MOD - comb(cnt_dir[copii[i].drp], k - 1) % MOD)) % MOD;
         }
-
-        moduri += (comb(cnt_dir[0] + cnt_dir[1], k - 1) - comb(cnt_dir[copii[i].drp], k - 1)) % MOD;
-        //copii[i].drp ? cnt_dir[1]-- : cnt_dir[0]--;
-        cnt_dir[0] = cnt_dir[1] = 0;
     }
+}
+
+bool cmp(Copil a, Copil b) {
+    if (a.pos == b.pos) return a.ev < b.ev;
+
+    return a.pos < b.pos;
 }
 
 int main()
@@ -88,7 +82,7 @@ int main()
     fin >> n >> k;
     precalc();
     citire();
-    sort(copii, copii + n, cond);
+    sort(copii, copii + n * 2, cmp);
     solve();
 
     fout << moduri;
