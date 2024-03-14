@@ -1,4 +1,4 @@
-///40 PUNCTE
+///100 PUNCTE
 #include <fstream>
 #include <algorithm>
 
@@ -18,22 +18,22 @@ struct Copil {
 };
 
 Copil copii[NMAX * 2 + 1];
-LL fact[NMAX];
+LL fact[NMAX + 2];
 int n, k;
 LL cnt_dir[2];
 LL moduri;
 
 void precalc() {
     fact[0] = 1;
-    for (int i = 1; i < NMAX; i++) fact[i] = fact[i - 1] * i % MOD;
+    for (int i = 1; i <= NMAX; i++) fact[i] = fact[i - 1] * i % MOD;
 }
 
 void citire() {
     for (int i = 1; i <= n; i++) {
         int x, y, z;
         fin >> x >> y >> z;
-        copii[2 * i - 2] = { x, true, (bool)z };
-        copii[2 * i - 1] = { y, false, (bool)z };
+        copii[2 * i - 2] = { x, false, (bool)z };
+        copii[2 * i - 1] = { y, true, (bool)z };
     }
 }
 
@@ -62,11 +62,11 @@ LL comb(LL N, LL K) {
 }
 
 void solve() {
-    for (int i = 0; i < 2 * n; i++) {
-        if (copii[i].ev) cnt_dir[copii[i].drp]++;
+    for (int i = 0; i <= 2 * n; i++) {
+        if (!copii[i].ev) cnt_dir[copii[i].drp]++;
         else {
             cnt_dir[copii[i].drp]--;
-            moduri = (moduri + (comb(cnt_dir[0] + cnt_dir[1], k - 1) + MOD - comb(cnt_dir[copii[i].drp], k - 1) % MOD)) % MOD;
+            moduri = (moduri + comb(cnt_dir[0] + cnt_dir[1], k - 1) + MOD - comb(cnt_dir[copii[i].drp], k - 1)) % MOD;
         }
     }
 }
