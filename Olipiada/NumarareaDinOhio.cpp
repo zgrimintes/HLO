@@ -10,7 +10,7 @@ using namespace std;
 ifstream fin("ohio.in");
 ofstream fout("ohio.out");
 
-map <int, int> M;
+map <LL, LL> M;
 LL fact[100001];
 LL n, k, maxn;
 LL ans;
