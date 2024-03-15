@@ -35,14 +35,14 @@ LL comb (LL N, LL K){
     return fact[N] * invMod(fact[N - K], fact[K]) % MOD;
 }
 
-LL max(LL a, LL b){
-    return a < b ? b : a;
+LL min(LL a, LL b){
+    return a < b ? a : b;
 }
 
-void solve(){
+solve(){
     for (int i = maxn; i > 0; i--){
         int temp = 0;
-        for (int j = 1; j <= max(k, M[i]); j++){
+        for (int j = 1; j <= min(k, M[i]); j++){
             temp = (temp + comb(n - M[i], k - j) * comb(M[i], j) % MOD) % MOD;
         }
         if (M[i] != 0) ans = (ans + (temp * i % MOD)) % MOD;
