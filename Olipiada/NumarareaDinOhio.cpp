@@ -39,7 +39,7 @@ LL min(LL a, LL b){
     return a < b ? a : b;
 }
 
-solve(){
+void solve(){
     for (int i = maxn; i > 0; i--){
         int temp = 0;
         for (int j = 1; j <= min(k, M[i]); j++){
