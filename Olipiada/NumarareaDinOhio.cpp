@@ -39,7 +39,7 @@ LL max(LL a, LL b){
     return a < b ? b : a;
 }
 
-solve(){
+void solve(){
     for (int i = maxn; i > 0; i--){
         int temp = 0;
         for (int j = 1; j <= max(k, M[i]); j++){
