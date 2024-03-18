@@ -1,4 +1,4 @@
-//C1, C2
+//C1, C2, C3
 #include <fstream>
 #include <algorithm>
 
@@ -7,11 +7,13 @@ using namespace std;
 ifstream fin("aprogressive.in");
 ofstream fout("aprogressive.out");
 
+const int nmax = 1030;
+
 int c, n, m;
-int mat[1025][1025];
-int ans1[1025], ans2[1025];
+int mat[nmax][nmax];
+int ans1[nmax], ans2[nmax];
 int i_ans1, i_ans2;
-int sumeS[1025][1025];
+int sumeS[nmax][nmax], sume[nmax];
 
 int checkBar(int *s, int st, int fn) {
 	sort(s + st, s + fn + 1);
@@ -50,6 +52,41 @@ void afisare(int *s, int fn) {
 		fout << s[i] << "\n";
 }
 
+void pushToAns(int x1, int x2, int y1, int y2, int r) {
+	fout << "(";
+	fout << x1 << "," <<
+		y1 << "," <<
+		x2 << "," <<
+		y2 << "," << r;
+	fout << ")";
+}
+
+void calcSums(int st, int fn, int l, int r) {
+	for (int i = st; i <= fn; i++)
+		sume[i] = sumeS[i][r] - sumeS[i][l - 1];
+}
+
+void solve3(int x1, int x2, int y1, int y2) {
+	if (x1 == x2 || y1 == y2) {
+		pushToAns(x1, x2, y1, y2, 0);
+		return;
+	}
+
+	calcSums(x1, x2, y1, y2);
+
+	int r = checkBar(sume, x1, x2);
+	if (r) pushToAns(x1, x2, y1, y2, r);
+	else {
+		int n_x2 = (x1 + x2) / 2, n_y2 = (y2 + y1) / 2;
+		fout << "(";
+		solve3(x1, n_x2, y1, n_y2);
+		solve3(x1, n_x2, n_y2 + 1, y2);
+		solve3(n_x2 + 1, x2, y1, n_y2);
+		solve3(n_x2 + 1, x2, n_y2 + 1, y2);
+		fout << ")";
+	}
+}
+
 int main() {
 	fin >> c >> n >> m;
 	citire();
@@ -58,6 +95,10 @@ int main() {
 	{
 	case 1: afisare(ans1, i_ans1); break;
 	case 2: afisare(ans2, i_ans2); break;
+	case 3:
+		//fout << "(";
+		solve3(1, n, 1, m);
+		//fout << ")";
 	default:
 		break;
 	}
