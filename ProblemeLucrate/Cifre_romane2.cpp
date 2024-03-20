@@ -1,3 +1,4 @@
+///96 PUNCTE
 #include <fstream>
 #include <cstring>
 
@@ -8,6 +9,7 @@ ofstream fout("cifre_romane2.out");
 
 int c;
 int nr;
+char nrR[10001];
 char cif[10][10][20] =  { { "" , "(M)", "(M)(M)", "(M)(M)(M)" },  
                         { "" , "(C)", "(C)(C)", "(C)(C)(C)", "(C)(D)", "(D)", "(D)(C)", "(D)(C)(C)", "(D)(C)(C)(C)", "(C)(M)" },
                         { "" , "(X)", "(X)(X)", "(X)(X)(X)", "(X)(L)", "(L)", "(L)(X)", "(L)(X)(X)", "(L)(X)(X)(X)", "(X)(C)" },
@@ -28,17 +30,54 @@ void solve1() {
     }
 }
 
-void init() {
-    
+void strg(char *p, int is, int j) {
+    int s = nrR - p;
+    int f = strlen(cif[is][j]) + s;
+
+    for (int i = s; nrR[i + f]; i++) {
+        nrR[i] = nrR[i + f];
+    }
+
+    nrR[strlen(nrR) - f] = NULL;
+}
+
+void solve2() {
+    int ans = 0;
+    int j = 3, p10 = 1000000;
+    for (int i = 0; i < 8; i++) {
+        for (; j > 0; j--) {
+            char* p = strstr(nrR, cif[i][j]);
+            if (p) {
+                strg(p, i, j);
+                ans += p10 * j;
+                break;
+            }
+        }
+
+        p10 /= 10;
+        j = 9;
+    }
+
+    if (strlen(nrR)) {
+        fout << "Numar invalid";
+        return;
+    }
+
+    fout << ans;
 }
 
 int main()
 {
-    fin >> c >> nr;
-    init();
+    fin >> c;
 
     if (c == 1) {
+        fin >> nr;
         solve1();
+    }
+    else {
+        fin.get();
+        fin.getline(nrR, 10001);
+        solve2();
     }
 
     return 0;
