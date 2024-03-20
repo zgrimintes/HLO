@@ -1,4 +1,3 @@
-///C1
 #include <fstream>
 #include <cstring>
 
@@ -9,31 +8,36 @@ ofstream fout("cifre_romane2.out");
 
 int c;
 int nr;
-char mln[4][20] = {"" , "(M)", "(M)(M)", "(M)(M)(M)"};
-char smii[10][20] = {"" , "(C)", "(C)(C)", "(C)(C)(C)", "(C)(D)", "(D)", "(D)(C)", "(D)(C)(C)", "(D)(C)(C)(C)", "(C)(M)"};
-char zmii[10][20] = {"" , "(X)", "(X)(X)", "(X)(X)(X)", "(X)(L)", "(L)", "(L)(X)", "(L)(X)(X)", "(L)(X)(X)(X)", "(X)(C)"};
-char mii[10][20] = {"" , "M", "MM", "MMM", "M(V)", "(V)", "(V)M", "(V)MM", "(V)MMM", "M(X)"};
-char sute[10][20] = {"" , "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
-char zeci[10][20] = {"" , "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
-char unit[10][20] = {"" , "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+char cif[10][10][20] =  { { "" , "(M)", "(M)(M)", "(M)(M)(M)" },  
+                        { "" , "(C)", "(C)(C)", "(C)(C)(C)", "(C)(D)", "(D)", "(D)(C)", "(D)(C)(C)", "(D)(C)(C)(C)", "(C)(M)" },
+                        { "" , "(X)", "(X)(X)", "(X)(X)(X)", "(X)(L)", "(L)", "(L)(X)", "(L)(X)(X)", "(L)(X)(X)(X)", "(X)(C)" },
+                        { "" , "M", "MM", "MMM", "M(V)", "(V)", "(V)M", "(V)MM", "(V)MMM", "M(X)" },
+                        { "" , "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" },
+                        { "" , "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" },
+                        { "" , "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" }
+                        };
 
-void solve1(){
+void solve1() {
     int a = nr / 1000000;
-    int b = nr / 100000 % 10;
-    int c = nr / 10000 % 10;
-    int d = nr / 1000 % 10;
-    int e = nr / 100 % 10;
-    int f = nr / 10 % 10;
-    int g = nr % 10;
+    int p10 = 1000000;
 
-    fout << mln[a] << smii[b] << zmii[c] << mii[d] << sute[e] << zeci[f] << unit[g];
+    for (int i = 0; i < 8; i++) {
+        fout << cif[i][a];
+        p10 /= 10; if (!p10) p10++;
+        a = nr / p10 % 10;
+    }
+}
+
+void init() {
+    
 }
 
 int main()
 {
     fin >> c >> nr;
+    init();
 
-    if (c == 1){
+    if (c == 1) {
         solve1();
     }
 
