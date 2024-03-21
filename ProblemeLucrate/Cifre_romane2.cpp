@@ -1,4 +1,4 @@
-///96 PUNCTE
+///100 PUNCTE
 #include <fstream>
 #include <cstring>
 
@@ -10,7 +10,7 @@ ofstream fout("cifre_romane2.out");
 int c;
 int nr;
 char nrR[10001];
-char cif[10][10][20] =  { { "" , "(M)", "(M)(M)", "(M)(M)(M)" },  
+char cif[10][10][20] =  { { "" , "(M)", "(M)(M)", "(M)(M)(M)" },
                         { "" , "(C)", "(C)(C)", "(C)(C)(C)", "(C)(D)", "(D)", "(D)(C)", "(D)(C)(C)", "(D)(C)(C)(C)", "(C)(M)" },
                         { "" , "(X)", "(X)(X)", "(X)(X)(X)", "(X)(L)", "(L)", "(L)(X)", "(L)(X)(X)", "(L)(X)(X)(X)", "(X)(C)" },
                         { "" , "M", "MM", "MMM", "M(V)", "(V)", "(V)M", "(V)MM", "(V)MMM", "M(X)" },
@@ -34,11 +34,11 @@ void strg(char *p, int is, int j) {
     int s = nrR - p;
     int f = strlen(cif[is][j]) + s;
 
-    for (int i = s; nrR[i + f]; i++) {
-        nrR[i] = nrR[i + f];
+    for (int i = s; i < f; i++) {
+        nrR[i] = ' ';
     }
 
-    nrR[strlen(nrR) - f] = NULL;
+    //nrR[strlen(nrR) - f] = NULL;
 }
 
 void solve2() {
@@ -47,8 +47,9 @@ void solve2() {
     for (int i = 0; i < 8; i++) {
         for (; j > 0; j--) {
             char* p = strstr(nrR, cif[i][j]);
-            if (p) {
-                strg(p, i, j);
+            if (p == nrR) {
+                //strg(p, i, j);
+                strcpy(nrR, nrR + strlen(cif[i][j]));
                 ans += p10 * j;
                 break;
             }
