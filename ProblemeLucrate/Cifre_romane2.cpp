@@ -30,17 +30,6 @@ void solve1() {
     }
 }
 
-void strg(char *p, int is, int j) {
-    int s = nrR - p;
-    int f = strlen(cif[is][j]) + s;
-
-    for (int i = s; i < f; i++) {
-        nrR[i] = ' ';
-    }
-
-    //nrR[strlen(nrR) - f] = NULL;
-}
-
 void solve2() {
     int ans = 0;
     int j = 3, p10 = 1000000;
@@ -48,7 +37,6 @@ void solve2() {
         for (; j > 0; j--) {
             char* p = strstr(nrR, cif[i][j]);
             if (p == nrR) {
-                //strg(p, i, j);
                 strcpy(nrR, nrR + strlen(cif[i][j]));
                 ans += p10 * j;
                 break;
