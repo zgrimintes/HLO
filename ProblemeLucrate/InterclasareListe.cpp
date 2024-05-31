@@ -1,3 +1,5 @@
+///To check
+///p->adr=q->adr; q->adr=p;
 #include <iostream>
 #include <fstream>
 
