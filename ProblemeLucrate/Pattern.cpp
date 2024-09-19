@@ -2,33 +2,41 @@
 
 using namespace std;
 
-void fillPattern(int is, int js, int ij, int jj, int n, int mat[1025][1025]) {
-    for (int ii = is; ii < n; ii++)
-        for (int jj = js; jj < n; jj++)
-            mat[ii][jj] = 1;
+int mat[1025][1025];
 
-    if (n == 1) return;
+void fillPattern(int is, int js, int l) {
+    for (int it = is; it - is < l / 2; it++)
+        for (int jt = js; jt - js < l / 2; jt++)
+            mat[it][jt] = 1;
 
-    bool ok == true;
+    if (l < 1) return;
 
-    for (; is <= ij; is++)
-        for (; js <= jj; js++)
-            if (mat[is][js] == 0) ok = false;
+    fillPattern(is, js + l / 2, l / 2);
+    fillPattern(is + l / 2, js, l / 2);
+    fillPattern(is + l / 2, js + l / 2, l / 2);
+}
 
-    if (ok) return;
+void afisare( int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++)
+            cout << mat[i][j] << " ";
 
-    fillPattern(0, n / 2 + 1, n - 1, mat);
-    fillPattern(n / 2 + 1, 0, n - 1, mat);
-    fillPattern(n / 2 + 1, n / 2 + 1, n - 1, mat);
+        cout << "\n";
+    }
 }
 
 int main()
 {
     int mat[1025][1025];
     int n; cin >> n;
-    fillPattern(0, 0, n - 1, mat);
-    fillPattern(0, n / 2 + 1, n - 2, mat);
-    fillPattern(n / 2 + 1, 0, n - 2, mat);
-    fillPattern(n / 2 + 1, n / 2 + 1, n - 2, mat);
+    int l = n;
+    int temp = 1;
+    while (l) temp *= 2, l--;
+
+    l = temp;
+
+    fillPattern(0, 0, l);
+
+    afisare(l);
     return 0;
 }
