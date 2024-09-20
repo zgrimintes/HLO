@@ -87,3 +87,65 @@ int main() {
 	
 	return 0;
 }
+
+//DE TERMINAT
+#include <iostream>
+
+using namespace std;
+
+int di[4] = {-1, 0 , 1, 0};
+int dj[4] = {0, 1 , 0, -1};
+char mat[1005][1005];
+int n, m;
+
+void bordare() {
+    for (int i = 0; i <= n + 1; i++)
+        mat[0][i] = mat[n + 1][i] = '$';
+
+    for (int j = 0; j <= m + 1; j++)
+        mat[j][0] = mat[j][m + 1] = '$';
+}
+
+void citire() {
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            cin >> mat[i][j];
+}
+
+void set_poz(int i, int j, int k) {
+    switch(k) {
+    case 1:
+        mat[i][j] = 'v';
+        break;
+    case 2:
+        mat[i][j] = '<';
+        break;
+    case 3:
+        mat[i][j] = '^';
+        break;
+    case 4:
+        mat[i][j] = '>';
+        break;
+    }
+}
+
+void fill_1221 (int i, int j) {
+
+    for (int k = 0; k < 4; k++) {
+        if (mat[i + di[k]][j + dj[k]] != '.') continue;
+
+        set_poz(i, j, k);
+
+    }
+}
+
+int main()
+{
+    cin >> n >> m;
+    bordare();
+    citire();
+
+    fill_1221();
+    return 0;
+}
+
