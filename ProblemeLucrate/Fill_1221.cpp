@@ -88,13 +88,13 @@ int main() {
 	return 0;
 }
 
-//DE TERMINAT
+//20 puncte - incomplet
 #include <iostream>
 
 using namespace std;
 
-int di[4] = {-1, 0 , 1, 0};
-int dj[4] = {0, 1 , 0, -1};
+int di[4] = { -1, 0 , 1, 0 };
+int dj[4] = { 0, 1 , 0, -1 };
 char mat[1005][1005];
 int n, m;
 
@@ -113,30 +113,62 @@ void citire() {
 }
 
 void set_poz(int i, int j, int k) {
-    switch(k) {
-    case 1:
+    switch (k) {
+    case 0:
+        mat[i + di[k]][j + dj[k]] = '^';
         mat[i][j] = 'v';
         break;
-    case 2:
+    case 1:
+        mat[i + di[k]][j + dj[k]] = '>';
         mat[i][j] = '<';
         break;
-    case 3:
+    case 2:
+        mat[i + di[k]][j + dj[k]] = 'v';
         mat[i][j] = '^';
         break;
-    case 4:
+    case 3:
+        mat[i + di[k]][j + dj[k]] = '<';
         mat[i][j] = '>';
         break;
     }
 }
 
-void fill_1221 (int i, int j) {
+
+bool fill_1221(int i, int j) {
+    bool pos = false;
 
     for (int k = 0; k < 4; k++) {
         if (mat[i + di[k]][j + dj[k]] != '.') continue;
 
-        set_poz(i, j, k);
+        pos = true;
+        if (mat[i][j] == '.') set_poz(i, j, k);
 
+        if (!fill_1221(i + di[k], j + dj[k])) mat[i][j] = '.', pos = false;
     }
+
+    if (!pos && mat[i][j] == '.') {
+        mat[i][j] = '.';
+        return false;
+    }
+
+    return true;
+}
+
+void afisare(int n, int m) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cout << mat[i][j];
+        }
+        cout << "\n";
+    }
+}
+
+bool checkMat(int n, int m) {
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            if (mat[i][j] == '.') return false;
+
+    return true;
 }
 
 int main()
@@ -145,7 +177,12 @@ int main()
     bordare();
     citire();
 
-    fill_1221();
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            if (mat[i][j] == '.') fill_1221(i, j);
+
+    if (checkMat(n, m)) afisare(n, m);
+    else cout << "altadata";
+
     return 0;
 }
-
