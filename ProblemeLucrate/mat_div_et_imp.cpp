@@ -8,16 +8,22 @@ ofstream fout("matrice_div_et_imp.out");
 
 int mat[1005][1005];
 
-void div_et_imp(int is, int js, int ij, int jj, int l) {
-    if (is == ij) {
-        fout << mat[is][js];
+void div_et_imp(int is, int js, int l) {
+    if (l == 1) {
+        fout << mat[is][js] << " ";
         return;
     }
 
-    div_et_imp(0, 0, l / 2, l / 2, l);
-    div_et_imp(l / 2 + 1, l / 2 + 1, l, l, l / 2);
-    div_et_imp(0, l / 2 + 1, l / 2, l, l / 2);
-    div_et_imp(l / 2 + 1, 0, l / 2, l, l / 2);
+    div_et_imp(is, js, l / 2);
+    div_et_imp(is + l / 2, js + l / 2 , l / 2);
+    div_et_imp(is, js + l / 2, l / 2);
+    div_et_imp(is + l / 2, js, l / 2);
+}
+
+void citire(int l) {
+    for (int i = 1; i <= l; i++)
+        for (int j = 1; j <= l; j++)
+            fin >> mat[i][j];
 }
 
 int main()
@@ -26,6 +32,8 @@ int main()
     int l = 1;
     while (n) l *= 2, n--;
 
-    div_et_imp(0, 0, l / 2, l / 2, l);
+    citire(l);
+
+    div_et_imp(1, 1, l);
     return 0;
 }
