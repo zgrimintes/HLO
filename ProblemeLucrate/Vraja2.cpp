@@ -1,11 +1,10 @@
-//DE TERMINAT
+//100 PUNCTE
 #include <iostream>
 
 using namespace std;
 
 int n;
 int arr[1000];
-int pozMin[1000];
 int cnt_vraji = 0;
 
 void citire() {
@@ -27,26 +26,27 @@ void cutDown(int l, int r, int m) {
 }
 
 void vraja(int l, int r) {
+    if (l > r) return;
+
     cnt_vraji++;
+    int pozMin[1000];
+    for (int i = 0; i < 1000; i++) pozMin[i] = 0;
+
     int m = minArr(l, r);
     cutDown(l, r, m);
 
     int indMin = 0;
 
-    for (int i = l; i < r; i++) {
-        if (!arr[i]) {
-            pozMin[indMin++] = i;
-        }
-    }
+    for (int i = l; i <= r; i++) {if (!arr[i]) {pozMin[indMin++] = i;}}
 
-    int lt = 0;
+    if (l == r) return;
+
+    int lt = l;
     for (int i = 0; i < indMin; i++) {
         vraja(lt, pozMin[i] - 1);
 
         lt = pozMin[i] + 1;
     }
-
-    if (l == r) return;
 
     vraja(lt, r);
 }
