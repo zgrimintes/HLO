@@ -4,7 +4,7 @@
 
 using namespace std;
 
-pair<int, int> cst[200000];
+pair<int, int> cst[200];
 deque< pair<int, int> > d;
 int maxAtTime = 0;
 
@@ -19,15 +19,19 @@ void afisare(int n) {
 }
 
 bool ok(pair<int, int> p1, pair<int, int> p2) {
-    return (p1.first < p2.first) || (p1.second < p2.second);
+    if (p1.first < p2.first) return 1;
+
+    if (p1.second < p2.second) return 1;
+
+    return 0;
 }
 
 void getMax(int n) {
     d.push_front(cst[0]); maxAtTime = 1;
     for (int i = 1; i < n; i++) {
         if (d.front().second >= cst[i].first) { // || d.front().second >= cst[i].second) {
-            if(d.size() > maxAtTime) maxAtTime = d.size();
             d.push_back(cst[i]);
+            if(d.size() > maxAtTime) maxAtTime = d.size();
         }
         else {
             d.pop_front();
@@ -43,5 +47,6 @@ int main()
     citire(n);
     sort(cst, cst + n, ok);
     getMax(n);
+    cout << maxAtTime;
     return 0;
 }
