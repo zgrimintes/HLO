@@ -13,23 +13,24 @@ void citire(int n) {
 
 void solve(int n, int x) {
     int l = 0;
-    int sum = 0;
+    LL sum = 0;
 
     for (int i = 0; i < n; i++) {
         sum += arr[i];
 
-        if (sum > x) {
+        while (sum > x) {
             sum -= arr[l++];
         }
 
         if (sum == x) cnt++;
     }
 
-    while (sum > arr[l]) {
+    while (sum > x) {
         sum -= arr[l++];
+        
+        if (sum == x) cnt++;
     }
 
-    if (sum == x) cnt++;
 }
 
 int main()
