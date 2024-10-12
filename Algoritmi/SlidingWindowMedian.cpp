@@ -36,13 +36,13 @@ void erase_from_set(LL val) {
 
     if (low.empty()) {
         low.insert(*up.begin());
-		up.erase(up.find(*up.begin()));
+        up.erase(up.find(*up.begin()));
     }
 }
 
 void citire(int n) {
-	for (int i = 0; i < n; i++)
-		cin >> arr[i];
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
 }
 
 int main()
@@ -51,7 +51,7 @@ int main()
     citire(n);
     low.insert(arr[0]);
 
-    for (int i = 0; i < k; i++) {
+    for (int i = 1; i < k; i++) {
         insert_to_set(arr[i]);
     }
 
