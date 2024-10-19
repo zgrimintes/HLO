@@ -1,12 +1,33 @@
-/*
 #include <iostream>
 
 using namespace std;
 
 int n, MOD;
 
+int gcdExtended(int a, int b, int &k, int &l) {
+	if (!b) {
+		k = 1;
+		l = 0;
+		return a;
+	}
+
+	int k1, l1;
+
+	int gcd = gcdExtended(b, a % b, k1, l1);
+
+	k = l1;
+	l = k1 - (l1 * (a / b));
+
+	return gcd;
+}
+
 int modInverse(int i) {
-	
+	int x, y;
+	int gcd = gcdExtended(i, MOD, x, y);
+
+	if (x < 0) return (x % MOD + MOD) % MOD;
+
+	return x;
 }
 
 int main() {
@@ -18,10 +39,10 @@ int main() {
 
 	return 0;
 }
-*/
 
 ///SAU UN APPROACH DINAMIC
 
+/*
 #include <iostream>
 
 using namespace std;
@@ -45,3 +66,4 @@ int main() {
 	modularInverse();
 	return 0;
 }
+*/
