@@ -28,7 +28,10 @@ void inverse_mod() {
 	int x, y;
 	int g = gcdExtended(a, n, x, y);
 
-	fout << (x % MOD + MOD) % MOD;
+
+	if (x < 0) x = (x % MOD + MOD) % MOD;
+
+	fout << x;
 }
 
 int main() {
