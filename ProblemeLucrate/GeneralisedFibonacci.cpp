@@ -178,7 +178,7 @@ class Solution {
         
         Matrix result = (powMat * knMat);
         
-        cout << result.mat[0][0] % m;
+        return result.mat[0][0] % m;
     }
 };
 
