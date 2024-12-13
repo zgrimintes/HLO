@@ -1,4 +1,4 @@
-///BFS pe un graf ORIENTAT
+///BFS pe un graf orientat
 
 #include <fstream>
 #include <queue>
@@ -22,6 +22,7 @@ void citire() {
 		fin >> x >> y;
 
 		G[x].push_back(y);
+		//G[y].push_back(x);
 	}
 }
 
